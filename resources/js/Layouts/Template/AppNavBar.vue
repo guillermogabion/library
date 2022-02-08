@@ -5,7 +5,7 @@
         persistent
     >
         <v-list-item class="px-2 pt-2">
-            <v-img class="at-logo" src="/images/lenzy_logo_small.png"></v-img>
+            <v-img class="at-logo" src="/images/logo.png"></v-img>
         </v-list-item>
         <v-list >
             <v-list-item
@@ -48,6 +48,11 @@ export default {
         drawer: true,
         items: [
             { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
+            { title: 'Books', icon: 'mdi-book-multiple', route: '/books' },
+            { title: 'Admin', icon: 'mdi-account-group', route: '/admin' },
+            { title: 'Student', icon: 'mdi-account-group', route: '/student' },
+            { title: 'Teacher', icon: 'mdi-account-group', route: '/teacher' },
+            { title: 'Borrow', icon: 'mdi-book-plus', route: '/borrow' },
         ],
     }),
     props : {
