@@ -19,7 +19,7 @@
         :page="page"
         :pageCount="numberOfPages"
         :headers="headers"
-        :items="products"
+        :items="books"
         :options.sync="options"
         :server-items-length="total"
         :items-per-page="options.itemsPerPage"
@@ -27,12 +27,12 @@
         :loading="loading"
         class="elevation-1"
       >
-        <template v-slot:item.is_refill="{ item }">
-          <!-- <v-switch
+        <template v-slot:item.status="{ item }">
+          <v-switch
             color="light-blue"
-            v-model="item.is_refill"
-            @click="changeRefillState(item)"
-          ></v-switch> -->
+            v-model="item.status"
+            @click="changeBookStatus(item)"
+          ></v-switch>
         </template>
         <template v-slot:item.actions="{ item }">
           <v-icon
@@ -64,7 +64,16 @@
         page: 0,
         total: 0,
         numberOfPages: 0,
-        products: [],
+        books: [
+            {
+              id: '1',
+              title: 'test-title',
+              author: 'danny daniels',
+              count: 100,
+              status:true,
+            },
+
+        ],
         loading: true,
         options: {
           itemsPerPage: 10
@@ -120,26 +129,25 @@
           .then(({data}) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
-            this.products = data.data;
+            // this.books = data.data;
             this.page = data.page;
             this.total = data.total;
             this.numberOfPages = data.last_page;
           });
     },
     
-    // changeRefillState(product){
-    //   this.bookForm = {
-    //     id: product.id,
-    //     name: product.name ,
-    //     title:  product.description ,
-    //     author:  product.description ,
-    //     count: 0roduct.description ,
-    //     status: null.is_refill ,
-    //     image: '/storage/'+product.image 
-    //   }
+    changeBookStatus(book){
+      this.bookForm = {
+        id: book.id,
+        title:  book.title ,
+        author:  book.author ,
+        count: book.count ,
+        status: book.status ,
+        // image: '/storage/'+product.image 
+      }
 
-    //   this.saveProduct()
-    // },
+      this.saveProduct()
+    },
     addBook(){
       this.bookForm = {
         id:null,
@@ -151,14 +159,13 @@
       }
       this.addition_edition_dailog = true
     },
-    editBook(product){
+    editBook(book){
       this.bookForm = {
-        id: product.id,
-        name: product.name ,
-        title:  product.description ,
-        author:  product.description ,
-        count: product.description ,
-        status: null.is_refill ,
+        id: book.id,
+        title:  book.title ,
+        author:  book.author ,
+        count: book.count ,
+        status: book.status ,
         // image: '/storage/'+product.image 
       }
       this.addition_edition_dailog = true
