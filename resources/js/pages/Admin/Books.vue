@@ -49,15 +49,15 @@
         </template>
       </v-data-table>
     </v-card>
-    <AddBookForm :form="bookForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveProduct()" />
+    <BookForm :form="bookForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveProduct()" />
 
 </div>
 </template>
 <script>
-  import AddBookForm from '../../components/adminForms/Book.vue'
+  import BookForm from '../../components/adminForms/Book.vue'
   export default {
     components: {
-      AddBookForm
+      BookForm
     },
     data() {
       return {

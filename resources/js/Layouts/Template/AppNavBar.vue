@@ -49,10 +49,10 @@ export default {
         items: [
             { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
             { title: 'Books', icon: 'mdi-book-multiple', route: '/books' },
-            { title: 'Admin', icon: 'mdi-account-group', route: '/admin' },
-            { title: 'Student', icon: 'mdi-account-group', route: '/student' },
-            { title: 'Teacher', icon: 'mdi-account-group', route: '/teacher' },
-            { title: 'Borrow', icon: 'mdi-book-plus', route: '/borrow' },
+            { title: 'Admin', icon: 'mdi-account-group', route: '/admins' },
+            { title: 'Student', icon: 'mdi-account-group', route: '/students' },
+            { title: 'Teacher', icon: 'mdi-account-group', route: '/teachers' },
+            { title: 'Borrow', icon: 'mdi-book-plus', route: '/borrows' },
         ],
     }),
     props : {

@@ -5,10 +5,10 @@ import Login from '../pages/Login.vue';
 import Main from '../pages/Main.vue';
 import Dashboard from '../pages/Admin/Dashboard.vue';
 import Books from '../pages/Admin/Books.vue';
-import Admin from '../pages/Admin/Admin.vue';
-import Student from '../pages/Admin/Student.vue';
-import Teacher from '../pages/Admin/Teacher.vue';
-import Borrow from '../pages/Admin/Borrow.vue';
+import Admins from '../pages/Admin/Admins.vue';
+import Students from '../pages/Admin/Students.vue';
+import Teachers from '../pages/Admin/Teachers.vue';
+import Borrows from '../pages/Admin/Borrows.vue';
 
 Vue.use(VueRouter);
 
@@ -33,24 +33,24 @@ const router = new VueRouter({
                     component: Books,
                 },
                 {
-                    path: '/admin',
-                    name: 'admin',
-                    component: Admin,
+                    path: '/admins',
+                    name: 'admins',
+                    component: Admins,
                 },
                 {
-                    path: '/student',
-                    name: 'student',
-                    component: Student,
+                    path: '/students',
+                    name: 'students',
+                    component: Students,
                 },
                 {
-                    path: '/teacher',
-                    name: 'teacher',
-                    component: Teacher,
+                    path: '/teachers',
+                    name: 'teachers',
+                    component: Teachers,
                 },
                 {
-                    path: '/borrow',
-                    name: 'borrow',
-                    component: Borrow,
+                    path: '/borrows',
+                    name: 'borrows',
+                    component: Borrows,
                 },
 
             ]

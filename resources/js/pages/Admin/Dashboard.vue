@@ -114,12 +114,7 @@
                         class="mx-4"
                         ></v-text-field>
                     </template>
-                    <template v-slot:body.append>
-                        <tr>
-                        <td></td>
-                        <td colspan="4"></td>
-                        </tr>
-                    </template>
+                    
                 </v-data-table>
             </v-alert>
             <v-alert
@@ -146,12 +141,7 @@
                             class="mx-4"
                             ></v-text-field>
                         </template>
-                        <template v-slot:body.append>
-                            <tr>
-                            <td></td>
-                            <td colspan="4"></td>
-                            </tr>
-                        </template>
+                        
                 </v-data-table>
             </v-alert>
         </div>
@@ -190,6 +180,11 @@ export default {
                 bookTitle: 'book-5',
                 borrower: 'Daniel Batican',
                 dateOfTransaction: '02/08/2022',
+            },
+            {
+                bookTitle: 'book-5',
+                borrower: 'Daniel Batican',
+                dateOfTransaction: '02/08/2022',
             }
         ],
         borrowedBooks: [
@@ -210,6 +205,11 @@ export default {
             },
             {
                 bookTitle: 'book-4',
+                borrower: 'Daniel Batican',
+                dateOfTransaction: '02/08/2022',
+            },
+            {
+                bookTitle: 'book-5',
                 borrower: 'Daniel Batican',
                 dateOfTransaction: '02/08/2022',
             },
