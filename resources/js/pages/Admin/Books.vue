@@ -49,7 +49,7 @@
         </template>
       </v-data-table>
     </v-card>
-    <BookForm :form="bookForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveProduct()" />
+    <BookForm :form="bookForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveBook()" />
 
 </div>
 </template>
@@ -146,7 +146,7 @@
         // image: '/storage/'+product.image 
       }
 
-      this.saveProduct()
+      this.saveBook()
     },
     addBook(){
       this.bookForm = {
@@ -170,7 +170,7 @@
       }
       this.addition_edition_dailog = true
     },
-    saveProduct(){
+    saveBook(){
       if(this.bookForm.id){
         this.$admin.put('/product/update/'+this.bookForm.id,this.bookForm).then(({data}) => {
           this.initialize()

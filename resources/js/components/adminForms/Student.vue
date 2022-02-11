@@ -1,14 +1,14 @@
 <template>
   <v-row justify="center">
     <v-dialog
-      v-model="addBookDialog"
+      v-model="addStudentDialog"
       persistent
       max-width="600px"
     >
     
       <v-card>
         <v-card-title>
-          <span class="text-h5">{{form.id ?'Edit' :'Add New'}} Book</span>
+          <span class="text-h5">{{form.id ?'Edit' :'Add New'}} Student</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -19,38 +19,45 @@
                     md="12"
                 >
                     <v-row>
-                        <v-col      
-                            
-                        >
+                        <v-col>
                             <v-text-field
-                                label="*Book Title"
+                                label="*Name"
                                 required
-                                v-model="form.title"
+                                v-model="form.name"
                             ></v-text-field>
                             <v-text-field
-                                label="*Author"
+                                label="*Email"
                                 required
-                                v-model="form.author"
+                                v-model="form.email"
                             ></v-text-field>
                             <v-text-field
-                                label="*Count"
+                                label="*Course"
                                 required
-                                v-model="form.count"
+                                v-model="form.course"
                             ></v-text-field>
                             <v-select
                                 :items="[
                                     {
-                                        value: 1,
-                                        text:'Available'
-                                    },{
                                         value: 0,
-                                        text:'Unavailable'
+                                        text:'1st'
+                                    },
+                                    {
+                                        value: 1,
+                                        text:'2nd'
+                                    },
+                                    {
+                                        value: 2,
+                                        text:'3rd'
+                                    },
+                                    {
+                                        value: 3,
+                                        text:'4th'
                                     }
                                 ]"
                                 item-text="text"
                                 item-value="value"
-                                label="Status"
-                                v-model="form.status"
+                                label="*Year"
+                                v-model="form.year"
                             ></v-select>
                             <!-- <v-text-field
                                 label="Price*"
@@ -126,10 +133,10 @@
             required: true,
             default: {
                 id:null,
-                title:'',
-                author:'',
-                count: 0,
-                status: null,
+                name:'',
+                email:'',
+                course:'',
+                year: null,
                 // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
         }
@@ -151,7 +158,7 @@
         
     },
     computed : {
-        addBookDialog(){
+        addStudentDialog(){
             return this.dialogState
         }
     }

@@ -9,7 +9,7 @@
       <v-spacer></v-spacer>
         <v-icon
           large
-          @click="addBook"
+          @click="addStudent"
         >
           mdi-plus
         </v-icon>
@@ -19,7 +19,7 @@
         :page="page"
         :pageCount="numberOfPages"
         :headers="headers"
-        :items="books"
+        :items="students"
         :options.sync="options"
         :server-items-length="total"
         :items-per-page="options.itemsPerPage"
@@ -27,50 +27,43 @@
         :loading="loading"
         class="elevation-1"
       >
-        <template v-slot:item.status="{ item }">
-          <v-switch
-            color="light-blue"
-            v-model="item.status"
-            @click="changeBookStatus(item)"
-          ></v-switch>
-        </template>
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:item.actions="{item}">
           <v-icon
             class="mr-2"
-            @click="editBook(item)"
+            @click="editStudent(item)"
           >
             mdi-pencil
           </v-icon>
           <v-icon
-            @click="deleteProduct(item)"
+            @click="deleteStudent(item)"
           >
             mdi-delete
           </v-icon>
         </template>
       </v-data-table>
     </v-card>
-    <BookForm :form="bookForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveProduct()" />
+    <StudentForm :form="studentForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveProduct()" />
 
 </div>
 </template>
 <script>
-  import BookForm from '../../components/adminForms/Book.vue'
+  import StudentForm from '../../components/adminForms/Student.vue'
   export default {
     components: {
-      BookForm
+      StudentForm
     },
     data() {
       return {
         page: 0,
         total: 0,
         numberOfPages: 0,
-        books: [
+        students: [
             {
               id: '1',
-              title: 'test-title',
-              author: 'danny daniels',
-              count: 100,
-              status:true,
+              name: 'Daniel Batican',
+              email: 'danny@sins.com',
+              course: 'CIT',
+              year: 0,
             },
 
         ],
@@ -82,19 +75,19 @@
           "items-per-page-options" : [5,10,15, 30, ]
         },
         headers: [
-          { text: "Book Title", value: "title" },
-          { text: "Author", value: "author" },
-          { text: "Count", value: "count" },
-          { text: "Status", value: "status" },
+          { text: "Name", value: "name" },
+          { text: "Email", value: "email" },
+          { text: "Course", value: "course" },
+          { text: "Year", value: "year" },
           { text: "Actions", value: "actions", sortable: false, },
         ],
         addition_edition_dailog: false,
-        bookForm: {
+        studentForm: {
           id:null,
-          title: '',
-          author: '',
-          count: 0,
-          status: null,
+          name: '',
+          email: '',
+          course:'',
+          year: null,
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
       };
@@ -111,12 +104,12 @@
   methods: {
     //Reading data from API method. 
     initialize() {
-        this.bookForm = {
+        this.studentForm = {
           id:null,
-          title: '',
-          author: '',
-          count: 0,
-          status: null,
+          name: '',
+          email: '',
+          course:'',
+          year: null,
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
@@ -129,62 +122,49 @@
           .then(({data}) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
-            // this.books = data.data;
+            // this.students = data.data;
             this.page = data.page;
             this.total = data.total;
             this.numberOfPages = data.last_page;
           });
     },
-    
-    changeBookStatus(book){
-      this.bookForm = {
-        id: book.id,
-        title:  book.title ,
-        author:  book.author ,
-        count: book.count ,
-        status: book.status ,
-        // image: '/storage/'+product.image 
-      }
-
-      this.saveProduct()
-    },
-    addBook(){
-      this.bookForm = {
+    addStudent(){
+      this.studentForm = {
         id:null,
-        title: '',
-        author: '',
-        count: 0,
-        status: null,
+        name: '',
+        email: '',
+        course:'',
+        year: null,
         // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
       }
       this.addition_edition_dailog = true
     },
-    editBook(book){
-      this.bookForm = {
-        id: book.id,
-        title:  book.title ,
-        author:  book.author ,
-        count: book.count ,
-        status: book.status ,
+    editStudent(student){
+      this.studentForm = {
+        id: student.id,
+        name:  student.name ,
+        email:  student.email ,
+        course: student.course ,
+        year: student.year ,
         // image: '/storage/'+product.image 
       }
       this.addition_edition_dailog = true
     },
     saveProduct(){
-      if(this.bookForm.id){
-        this.$admin.put('/product/update/'+this.bookForm.id,this.bookForm).then(({data}) => {
+      if(this.studentForm.id){
+        this.$admin.put('/product/update/'+this.studentForm.id,this.studentForm).then(({data}) => {
           this.initialize()
         })
       }
       else{
-        this.$admin.post('/product/create',this.bookForm).then(({data}) =>{
+        this.$admin.post('/product/create',this.studentForm).then(({data}) =>{
       
           this.initialize()
         })
       }
     },
-    deleteProduct(product){
-      this.$admin.delete('/product/delete/'+ product.id).then(({data}) => {
+    deleteStudent(student){
+      this.$admin.delete('/product/delete/'+ student.id).then(({data}) => {
         this.initialize() 
       })
     }
