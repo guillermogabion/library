@@ -91,7 +91,7 @@
         this.$admin.get('admin/index').then(({data}) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
-            this.admins = data.data;
+            this.admins = data;
           });
     },
     addAdmin(){
