@@ -18,7 +18,7 @@ class Book extends Model
         'status',
     ];
 
-    public function barrows()
+    public function borrows()
     {
         return $this->hasMany(
             Barrow::class, 

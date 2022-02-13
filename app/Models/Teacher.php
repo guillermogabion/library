@@ -15,8 +15,8 @@ class Teacher extends Model
         'password',
     ];
 
-    public function barrows()
+    public function borrows()
     {
-        return $this->morphMany(Barrow::class, 'barrowerable');
+        return $this->morphMany(Borrow::class, 'borrowerable');
     }
 }
