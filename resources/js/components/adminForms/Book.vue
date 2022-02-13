@@ -19,13 +19,11 @@
                     md="12"
                 >
                     <v-row>
-                        <v-col      
-                            
-                        >
+                        <v-col>
                             <v-text-field
                                 label="*Book Title"
                                 required
-                                v-model="form.title"
+                                v-model="form.book_title"
                             ></v-text-field>
                             <v-text-field
                                 label="*Author"
@@ -36,19 +34,21 @@
                                 label="*Count"
                                 required
                                 v-model="form.count"
+                                type="number"
                             ></v-text-field>
                             <v-select
                                 :items="[
                                     {
-                                        value: 1,
-                                        text:'Available'
-                                    },{
-                                        value: 0,
-                                        text:'Unavailable'
+                                      id: 1,
+                                      value:'Available'
+                                    },
+                                    {
+                                      id: 0,
+                                      value:'Unavailable'
                                     }
                                 ]"
-                                item-text="text"
-                                item-value="value"
+                                item-text="value"
+                                item-value="id"
                                 label="Status"
                                 v-model="form.status"
                             ></v-select>
@@ -126,10 +126,10 @@
             required: true,
             default: {
                 id:null,
-                title:'',
+                book_title:'',
                 author:'',
                 count: 0,
-                status: null,
+                status:1,
                 // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
         }

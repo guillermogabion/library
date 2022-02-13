@@ -29,6 +29,13 @@
                                 label="*Email"
                                 required
                                 v-model="form.email"
+                                type="email"
+                            ></v-text-field>
+                            <v-text-field
+                                label="*Password"
+                                required
+                                v-model="form.password"
+                                type="password"
                             ></v-text-field>
                             <!-- <v-text-field
                                 label="Price*"
@@ -106,6 +113,7 @@
                 id:null,
                 name:'',
                 email:'',
+                password:'',
                 // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
         }

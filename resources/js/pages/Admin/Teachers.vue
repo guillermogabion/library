@@ -16,14 +16,8 @@
       </v-card-title>
       <v-data-table
         :footer-props="footerProps"
-        :page="page"
-        :pageCount="numberOfPages"
         :headers="headers"
         :items="teachers"
-        :options.sync="options"
-        :server-items-length="total"
-        :items-per-page="options.itemsPerPage"
-        @update:options="initialize"
         :loading="loading"
         class="elevation-1"
       >
@@ -54,21 +48,8 @@
     },
     data() {
       return {
-        page: 0,
-        total: 0,
-        numberOfPages: 0,
-        teachers: [
-            {
-              id: '1',
-              name: 'Daniel Batican',
-              email: 'danny@sins.com',
-            },
-
-        ],
+        teachers: [],
         loading: true,
-        options: {
-          itemsPerPage: 10
-        },
         footerProps :{
           "items-per-page-options" : [5,10,15, 30, ]
         },
@@ -82,6 +63,7 @@
           id:null,
           name: '',
           email: '',
+          password:'',
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
       };
@@ -102,29 +84,27 @@
           id:null,
           name: '',
           email: '',
+          password:'',
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
-        const { page, itemsPerPage } = this.options;
-        let params = { 
-          page: page,
-          per_page: itemsPerPage
-        } 
-        this.$admin.get('/product/all', { params })
-          .then(({data}) => {
+        this.$admin.get('teacher/index').then((data) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
-            // this.students = data.data;
-            this.page = data.page;
-            this.total = data.total;
-            this.numberOfPages = data.last_page;
+            this.teachers = data.data;
+            console.log(data);
+            // this.page = data.page;
+            // this.total = data.total;
+            // this.numberOfPages = data.last_page;
           });
+      // console.log(this.teachers);
     },
     addTeacher(){
       this.teacherForm = {
         id:null,
         name: '',
         email: '',
+        password:'',
         // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
       }
       this.addition_edition_dailog = true
@@ -133,26 +113,29 @@
       this.teacherForm = {
         id: teacher.id,
         name:  teacher.name ,
-        email:  teacher.email ,
+        email:  teacher.email, 
         // image: '/storage/'+product.image 
       }
       this.addition_edition_dailog = true
     },
     saveTeacher(){
+      console.log(this.teacherForm)
       if(this.teacherForm.id){
-        this.$admin.put('/product/update/'+this.teacherForm.id,this.teacherForm).then(({data}) => {
+        this.$admin.post('teacher/update/'+this.teacherForm.id,this.teacherForm).then(({data}) => {
+          console.log(data);
+          this.successNotify('update');
           this.initialize()
         })
       }
       else{
-        this.$admin.post('/product/create',this.teacherForm).then(({data}) =>{
-      
+        this.$admin.post('teacher/create',this.teacherForm).then(({data}) =>{
+          this.successNotify('created');
           this.initialize()
         })
       }
     },
     deleteTeacher(teacher){
-      this.$admin.delete('/product/delete/'+ teacher.id).then(({data}) => {
+      this.$admin.delete('teacher/delete/'+ teacher.id).then(({data}) => {
         this.initialize() 
       })
     }

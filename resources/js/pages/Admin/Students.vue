@@ -16,14 +16,8 @@
       </v-card-title>
       <v-data-table
         :footer-props="footerProps"
-        :page="page"
-        :pageCount="numberOfPages"
         :headers="headers"
         :items="students"
-        :options.sync="options"
-        :server-items-length="total"
-        :items-per-page="options.itemsPerPage"
-        @update:options="initialize"
         :loading="loading"
         class="elevation-1"
       >
@@ -42,7 +36,7 @@
         </template>
       </v-data-table>
     </v-card>
-    <StudentForm :form="studentForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveProduct()" />
+    <StudentForm :form="studentForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveStudent()" />
 
 </div>
 </template>
@@ -54,25 +48,10 @@
     },
     data() {
       return {
-        page: 0,
-        total: 0,
-        numberOfPages: 0,
-        students: [
-            {
-              id: '1',
-              name: 'Daniel Batican',
-              email: 'danny@sins.com',
-              course: 'CIT',
-              year: 0,
-            },
-
-        ],
+        students: [],
         loading: true,
-        options: {
-          itemsPerPage: 10
-        },
         footerProps :{
-          "items-per-page-options" : [5,10,15, 30, ]
+          "items-per-page-options" : [5,10,15,30,]
         },
         headers: [
           { text: "Name", value: "name" },
@@ -109,23 +88,17 @@
           name: '',
           email: '',
           course:'',
-          year: null,
+          year: '',
+          password: '',
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
-        const { page, itemsPerPage } = this.options;
-        let params = { 
-          page: page,
-          per_page: itemsPerPage
-        } 
-        this.$admin.get('/product/all', { params })
-          .then(({data}) => {
+        this.$admin.get('student/index')
+          .then((data) => {
+            // console.log(data);
             //Then injecting the result to datatable parameters.
             this.loading = false;
-            // this.students = data.data;
-            this.page = data.page;
-            this.total = data.total;
-            this.numberOfPages = data.last_page;
+            this.students = data.data;
           });
     },
     addStudent(){
@@ -134,7 +107,8 @@
         name: '',
         email: '',
         course:'',
-        year: null,
+        year: '',
+        password: '',
         // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
       }
       this.addition_edition_dailog = true
@@ -146,25 +120,29 @@
         email:  student.email ,
         course: student.course ,
         year: student.year ,
+        // password: student.password,
         // image: '/storage/'+product.image 
       }
       this.addition_edition_dailog = true
     },
-    saveProduct(){
+    saveStudent(){
       if(this.studentForm.id){
-        this.$admin.put('/product/update/'+this.studentForm.id,this.studentForm).then(({data}) => {
+        console.log(this.studentForm);
+        this.$admin.post('student/update/'+this.studentForm.id,this.studentForm).then(({data}) => {
+          console.log(data);
           this.initialize()
         })
       }
       else{
-        this.$admin.post('/product/create',this.studentForm).then(({data}) =>{
-      
+          // console.log(this.studentForm);
+          // return;
+        this.$admin.post('student/create',this.studentForm).then(({data}) =>{
           this.initialize()
         })
       }
     },
     deleteStudent(student){
-      this.$admin.delete('/product/delete/'+ student.id).then(({data}) => {
+      this.$admin.delete('student/delete/'+ student.id).then(({data}) => {
         this.initialize() 
       })
     }
