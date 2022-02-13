@@ -29,19 +29,11 @@ Route::group(['middleware' => ['auth:api']], function () {
         return Auth::user();
     });
 
-<<<<<<< HEAD
-    Route::get('user/index',[AdminController::class, 'index']);
-    Route::post('user/create',[AdminController::class, 'store']);
-    Route::get('user/show/{id}',[AdminController::class, 'show']);
-    Route::post('user/update/{id}',[AdminController::class, 'update']);
-    Route::delete('user/delete/{admin}',[AdminController::class, 'destroy']);    
-=======
     Route::get('admin/index',[UserController::class, 'index']);
     Route::post('admin/create',[UserController::class, 'store']);
     Route::get('admin/show/{id}',[UserController::class, 'show']);
     Route::post('admin/update/{id}',[UserController::class, 'update']);
     Route::delete('admin/delete/{admin}',[UserController::class, 'destroy']);    
->>>>>>> 9aaced9a0249d53053a5be65ff47bc662b82ce0f
 
 
     Route::get('student/index',[StudentController::class, 'index']);
