@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,11 +29,11 @@ Route::group(['middleware' => ['auth:api']], function () {
         return Auth::user();
     });
 
-    Route::get('teacher/index',[AdminController::class, 'index']);
-    Route::post('teacher/create',[AdminController::class, 'store']);
-    Route::get('teacher/show/{id}',[AdminController::class, 'show']);
-    Route::post('teacher/update/{id}',[AdminController::class, 'update']);
-    Route::delete('teacher/delete/{teacher}',[AdminController::class, 'destroy']);    
+    Route::get('admin/index',[UserController::class, 'index']);
+    Route::post('admin/create',[UserController::class, 'store']);
+    Route::get('admin/show/{id}',[UserController::class, 'show']);
+    Route::post('admin/update/{id}',[UserController::class, 'update']);
+    Route::delete('admin/delete/{admin}',[UserController::class, 'destroy']);    
 
 
     Route::get('student/index',[StudentController::class, 'index']);
