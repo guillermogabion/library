@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
-        $admins = Admin::all();
+        $admins = User::all();
 
         return $admins;
     }
@@ -23,7 +23,7 @@ class AdminController extends Controller
 
         ]);
 
-        $admin = Admin::create([
+        $admin = User::create([
             'name'=> $request->name,
             'email'=> $request->email,
             'password'=> bcrypt($request->password),
@@ -36,7 +36,7 @@ class AdminController extends Controller
     
     public function show($id)
     {
-        $admin = Admin::find($id);
+        $admin = User::find($id);
 
         return $admin;
     }
@@ -50,7 +50,7 @@ class AdminController extends Controller
             'email'=>'required|email',
         ]);
 
-        $admin = Admin::find($id);
+        $admin = User::find($id);
 
         $adminUpdate = [
             'name'=> $request->name,
@@ -66,7 +66,7 @@ class AdminController extends Controller
         return "Success";
     }
 
-    public function destroy(Admin $admin)
+    public function destroy(User $admin)
     {
         
         $admin->delete();
