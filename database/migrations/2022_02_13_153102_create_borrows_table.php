@@ -14,7 +14,12 @@ class CreateBorrowsTable extends Migration
     public function up()
     {
         Schema::create('borrows', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->morphs('borrowerable');
+            $table->foreign('book_id')
+                ->references('id')
+                ->on('books')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
