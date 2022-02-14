@@ -37,40 +37,9 @@
                                 v-model="form.password"
                                 type="password"
                             ></v-text-field>
-                            <!-- <v-text-field
-                                label="Price*"
-                                type="number"
-                                required
-                                v-model="form.price"
-                                step=".01"
-                            ></v-text-field> -->
                             <p>*indicates required field</p>
 
                         </v-col>
-                        <!-- <v-col
-                            cols="6"
-                            sm="6"
-                            md="6"
-                        >
-
-                            <v-img
-                                lazy-src="https://picsum.photos/id/11/10/6"
-                                max-height="250"
-                                max-width="250"
-                                height="200"
-                                :src="form.image ? form.image : 'https://cdn.vuetifyjs.com/images/parallax/material2.jpg'"
-                            ></v-img>
-                            <v-btn 
-                                icon 
-                                large
-                                color="light-blue" 
-                                @click="$refs.inputUpload.click()"
-                            >
-                                <v-icon>mdi-image-plus</v-icon>
-                            </v-btn>
-                            <input v-show="false" ref="inputUpload" type="file" @change="processImage" >
-                        </v-col> -->
-                        
                     </v-row>
                 </v-col>
             
