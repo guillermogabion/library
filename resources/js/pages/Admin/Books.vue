@@ -21,20 +21,9 @@
         :loading="loading"
         class="elevation-1"
       >
-        <template v-slot:item.status="{ item }">
-          <!-- <v-switch
-            color="light-blue"
-            v-model="item.status"
-            @click="changeBookStatus(item)"
-          ></v-switch> -->
-          <v-select
-              :items="statuses"
-              item-text="value"
-              item-value="id"
-              @change="changeBookStatus(item)"
-              v-model="item.status"
-          ></v-select>
-        </template>
+         <template v-slot:item.status ="{ item }">
+                        {{item.status == 1 ? 'Available' : 'Unavaillable'}}
+                    </template>
         <template v-slot:item.actions="{ item }">
           <v-icon
             class="mr-2"
@@ -63,34 +52,31 @@
     data() {
       return {
         books: [],
-        statuses:[
-                  {
-                    id: 1,
-                    value:'Available'
-                  },
-                  {
-                    id: 0,
-                    value:'Unavailable'
-                  }
-              ],
         loading: true,
         footerProps :{
           "items-per-page-options" : [5,10,15, 30, ]
         },
         headers: [
-          { text: "Book Title", value: "book_title" },
-          { text: "Author", value: "author" },
-          { text: "Count", value: "count" },
-          { text: "Status", value: "status" },
-          { text: "Actions", value: "actions", sortable: false, },
+          {
+            text: 'ID',
+            align: 'center',
+            sortable: false,
+            value: 'id',
+          },
+          { text: "Book Title", value: "book_title", align: 'center'},
+          { text: "Author", value: "author", align: 'center' },
+          { text: "Availlable Books", value: "availlable" , align: 'center'},
+          { text: "Total", value: "total", align: 'center' },
+          { text: "Status", value: "status", align: 'center'},
+          { text: "Actions", value: "actions", sortable: false,align: 'center' },
         ],
         addition_edition_dailog: false,
         bookForm: {
           id:null,
           book_title: '',
           author: '',
-          count: 0,
-          status:1,
+          availlable: 0,
+          total:0
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
       };
@@ -111,8 +97,8 @@
           id:null,
           book_title: '',
           author: '',
-          count: 0,
-          status:1,
+          availlable: 0,
+          total:0
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
@@ -124,24 +110,14 @@
           });
     },
     
-    changeBookStatus(book){
-      this.bookForm = {
-        id: book.id,
-        book_title:  book.book_title ,
-        author:  book.author ,
-        count: book.count ,
-        status: book.status ,
-        // image: '/storage/'+product.image 
-      }
-      this.saveBook()
-    },
+   
     addBook(){
       this.bookForm = {
         id:null,
         book_title: '',
         author: '',
-        count: 0,
-        status:1,
+        availlable: 0,
+        total:0
         // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
       }
       this.addition_edition_dailog = true
@@ -151,8 +127,8 @@
         id: book.id,
         book_title:  book.book_title ,
         author:  book.author ,
-        count: book.count ,
-        status: book.status ,
+        availlable: book.availlable ,
+        total:book.total,
         // image: '/storage/'+product.image 
       }
       this.addition_edition_dailog = true
@@ -169,7 +145,7 @@
       else{
         console.log(this.bookForm)
         this.$admin.post('book/create',this.bookForm).then(({data}) =>{
-          this.successNotify('create');
+          this.successNotify('created');
           this.initialize()
         })
       }

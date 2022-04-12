@@ -10,11 +10,13 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'phone_number',
         'email',
-        'password',
         'course', 
         'year', 
+        'qr_value'
     ];
 
     public function borrows()

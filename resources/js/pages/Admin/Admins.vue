@@ -54,9 +54,15 @@
           "items-per-page-options" : [5,10,15, 30, ]
         },
         headers: [
-          { text: "Name", value: "name" },
-          { text: "Email", value: "email" },
-          { text: "Actions", value: "actions", sortable: false, },
+          {
+            text: 'ID',
+            align: 'center',
+            sortable: false,
+            value: 'id',
+          },
+          { text: "Name", value: "name", align: 'center', },
+          { text: "Email", value: "email", align: 'center', },
+          { text: "Actions", value: "actions", sortable: false, align: 'center', },
         ],
         addition_edition_dailog: false,
         adminForm: {

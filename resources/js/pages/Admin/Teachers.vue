@@ -22,6 +22,9 @@
         class="elevation-1"
       >
         <template v-slot:item.actions="{item}">
+           <v-btn class="mr-2" x-small color="success" @click="showDialog = true, generate(item)">
+            View QR
+          </v-btn>
           <v-icon
             class="mr-2"
             @click="editTeacher(item)"
@@ -37,7 +40,27 @@
       </v-data-table>
     </v-card>
     <TeacherForm :form="teacherForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveTeacher()" />
-
+    <v-row justify="center">
+      <v-dialog
+          v-model="showDialog"
+          persistent
+          max-width="290"
+      >
+        <v-card>
+          <v-card-title class="primary headline" style="font-weight:bold; color:white;">
+              Teacher QR Code
+              <v-spacer></v-spacer>
+                <v-icon color="white" @click="showDialog = false" >
+                    mdi-close-circle-outline
+                </v-icon>
+          </v-card-title>
+          <v-card-text class="mt-4">Please Take a Pic or Screenshot this.</v-card-text>
+          <v-card-actions>
+                <div class="mt-5 mb-5 mx-auto " v-html="qr_code"></div>
+          </v-card-actions>
+      </v-card>
+      </v-dialog>
+    </v-row>
 </div>
 </template>
 <script>
@@ -49,21 +72,32 @@
     data() {
       return {
         teachers: [],
+        qr_code:{},
+        showDialog: false,
         loading: true,
         footerProps :{
           "items-per-page-options" : [5,10,15, 30, ]
         },
         headers: [
-          { text: "Name", value: "name" },
-          { text: "Email", value: "email" },
-          { text: "Actions", value: "actions", sortable: false, },
+          {
+            text: 'ID',
+            align: 'center',
+            sortable: false,
+            value: 'id',
+          },
+          { text: "First Name", value: "first_name",align: 'center' },
+          { text: "Last Name", value: "first_name",align: 'center' },
+          { text: "Phone Number", value: "phone_number",align: 'center' },
+          { text: "Email", value: "email",align: 'center' },
+          { text: "Actions", value: "actions", sortable: false,align: 'center' },
         ],
         addition_edition_dailog: false,
         teacherForm: {
           id:null,
-          name: '',
+          first_name: '',
+          last_name: '',
+          phone_number: '',
           email: '',
-          password:'',
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
       };
@@ -82,9 +116,10 @@
     initialize() {
         this.teacherForm = {
           id:null,
-          name: '',
+          first_name: '',
+          last_name: '',
+          phone_number: '',
           email: '',
-          password:'',
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
@@ -99,25 +134,31 @@
           });
       // console.log(this.teachers);
     },
+
     addTeacher(){
       this.teacherForm = {
         id:null,
-        name: '',
+        first_name: '',
+        last_name: '',
+        phone_number: '',
         email: '',
-        password:'',
         // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
       }
       this.addition_edition_dailog = true
     },
+
     editTeacher(teacher){
       this.teacherForm = {
         id: teacher.id,
-        name:  teacher.name ,
+        first_name:  teacher.first_name ,
+        last_name:  teacher.last_name ,
+        phone_number:  teacher.phone_number ,
         email:  teacher.email, 
         // image: '/storage/'+product.image 
       }
       this.addition_edition_dailog = true
     },
+
     saveTeacher(){
       console.log(this.teacherForm)
       if(this.teacherForm.id){
@@ -134,6 +175,13 @@
         })
       }
     },
+
+    generate(teacher){
+      this.$admin.get('teacher/generate/'+ teacher.id).then(({data}) => {
+        this.qr_code =  data
+      })
+    },
+
     deleteTeacher(teacher){
       this.$admin.delete('teacher/delete/'+ teacher.id).then(({data}) => {
         this.initialize() 

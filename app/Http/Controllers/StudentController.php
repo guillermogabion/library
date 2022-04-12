@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class StudentController extends Controller
 {
@@ -17,20 +18,22 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required',
+            'first_name'=>'required',
+            'last_name'=>'required',
             'course'=>'required',
             'year'=>'required',
             'email'=>'required|email',
-            'password'=>'required',
+            'phone_number'=>'required',
 
         ]);
 
         $student = Student::create([
-            'name'=> $request->name,
+            'first_name'=> $request->first_name,
+            'last_name'=> $request->last_name,
             'course'=>$request->course,
             'year'=>$request->year,
             'email'=> $request->email,
-            'password'=> bcrypt($request->password),
+            'phone_number'=>$request->phone_number,
 
 
         ]);
@@ -51,28 +54,38 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required',
+            'first_name'=>'required',
+            'last_name'=>'required',
             'email'=>'required|email',
             'course'=>'required',
+            'phone_number'=>'required',
             'year'=>'required',
         ]);
 
         $student = Student::find($id);
 
         $studentUpdate = [
-            'name'=> $request->name,
+            'first_name'=> $request->first_name,
+            'last_name'=> $request->last_name,
             'email'=> $request->email,
             'course'=>$request->course,
             'year'=>$request->year,
+            'phone_number'=>$request->phone_number,
         ];
 
-        if($request->password){
-            $studentUpdate["password"] = bcrypt($request->password);
-        }
+      
 
         $student->update($studentUpdate);
 
         return "Success";
+    }
+
+    public function generate ($id)
+    {
+        $student = Student::findOrFail($id);
+        $qrcode = QrCode::size(200)
+                ->generate($student->last_name.'_'.$student->email);
+        return $qrcode;
     }
 
     public function destroy(Student $student)

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Borrow extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'book_id',
+    ];
 
 
     public function book()

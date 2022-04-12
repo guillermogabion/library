@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('student/create',[StudentController::class, 'store']);
     Route::get('student/show/{id}',[StudentController::class, 'show']);
     Route::post('student/update/{id}',[StudentController::class, 'update']);
+    Route::get('student/generate/{id}',[StudentController::class, 'generate']);
     Route::delete('student/delete/{student}',[StudentController::class, 'destroy']);
 
 
@@ -47,6 +48,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('teacher/create',[TeacherController::class, 'store']);
     Route::get('teacher/show/{id}',[TeacherController::class, 'show']);
     Route::post('teacher/update/{id}',[TeacherController::class, 'update']);
+    Route::get('teacher/generate/{id}',[TeacherController::class, 'generate']);
     Route::delete('teacher/delete/{teacher}',[TeacherController::class, 'destroy']);    
 
 
