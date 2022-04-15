@@ -4,7 +4,7 @@
         class="mx-auto px-5 py-5"
         outlined
     >
-      <v-card-title>
+      <v-card-title class="text-h5 font-weight-bold">
         Administrators
       <v-spacer></v-spacer>
         <v-icon

@@ -4,9 +4,9 @@
         class="mx-auto px-5 py-5"
         outlined
     >
-      <v-card-title>
-        Books
-      <v-spacer></v-spacer>
+      <v-card-title class="text-h5 font-weight-bold">
+        List of Books
+        <v-spacer></v-spacer>
         <v-icon
           large
           @click="addBook"
@@ -14,11 +14,23 @@
           mdi-plus
         </v-icon>
       </v-card-title>
+      <v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      
       <v-data-table
         :footer-props="footerProps"
         :headers="headers"
         :items="books"
         :loading="loading"
+        :search="search"
         class="elevation-1"
       >
          <template v-slot:item.status ="{ item }">
@@ -51,6 +63,7 @@
     },
     data() {
       return {
+        search: '',
         books: [],
         loading: true,
         footerProps :{

@@ -4,7 +4,7 @@
         class="mx-auto px-5 py-5"
         outlined
     >
-      <v-card-title>
+      <v-card-title class="text-h5 font-weight-bold">
         Teachers
       <v-spacer></v-spacer>
         <v-icon
@@ -14,10 +14,21 @@
           mdi-plus
         </v-icon>
       </v-card-title>
+      <v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
       <v-data-table
         :footer-props="footerProps"
         :headers="headers"
         :items="teachers"
+        :search="search"
         :loading="loading"
         class="elevation-1"
       >
@@ -25,6 +36,12 @@
            <v-btn class="mr-2" x-small color="success" @click="showDialog = true, generate(item)">
             View QR
           </v-btn>
+           <v-icon 
+            class="mr-2" 
+            @click="$router.push('/teacher-view/'+item.id)"
+          >
+            mdi-eye
+          </v-icon>
           <v-icon
             class="mr-2"
             @click="editTeacher(item)"
@@ -73,6 +90,7 @@
       return {
         teachers: [],
         qr_code:{},
+        search: '',
         showDialog: false,
         loading: true,
         footerProps :{

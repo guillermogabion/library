@@ -85,6 +85,12 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $qrcode = QrCode::size(200)
                 ->generate($student->last_name.'_'.$student->email);
+
+        $img_value = $student->last_name.'_'.$student->email;
+
+        Student::where('id', $id)->update([
+            'qr_value' => $img_value    
+        ]);
         return $qrcode;
     }
 

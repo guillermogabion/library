@@ -4,8 +4,8 @@
         class="mx-auto px-5 py-5"
         outlined
     >
-      <v-card-title>
-        Students
+      <v-card-title class="text-h5 font-weight-bold">
+        List of Students
       <v-spacer></v-spacer>
         <v-icon
           large
@@ -14,17 +14,37 @@
           mdi-plus
         </v-icon>
       </v-card-title>
+      <v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
       <v-data-table
         :footer-props="footerProps"
         :headers="headers"
         :items="students"
+        :search="search"
         :loading="loading"
         class="elevation-1"
       >
+        <template v-slot:item.courseYear="{item}">
+          {{item.year}} {{item.course}}
+        </template>
         <template v-slot:item.actions="{item}">
           <v-btn class="mr-2" x-small color="success" @click="showDialog = true, generate(item)">
             View QR
           </v-btn>
+          <v-icon 
+            class="mr-2" 
+            @click="$router.push('/student-view/'+item.id)"
+          >
+            mdi-eye
+          </v-icon>
           <v-icon
             class="mr-2"
             @click="editStudent(item)"
@@ -73,6 +93,7 @@
       return {
         students: [],
         qr_code:{},
+        search: '',
         showDialog: false,
         loading: true,
         footerProps :{
@@ -89,8 +110,8 @@
           { text: "Last Name", value: "last_name",align: 'center' },
           { text: "Phone Number", value: "phone_number",align: 'center' },
           { text: "Email", value: "email",align: 'center' },
-          { text: "Course", value: "course",align: 'center' },
-          { text: "Year", value: "year",align: 'center' },
+          { text: "Year/Course", value: "courseYear",align: 'center' },
+          // { text: "Year", value: "year",align: 'center' },
           { text: "Actions", value: "actions", sortable: false,align: 'center' },
         ],
         addition_edition_dailog: false,

@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
@@ -57,6 +58,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('book/show/{id}',[BookController::class, 'show']);
     Route::post('book/update/{id}',[BookController::class, 'update']);
     Route::delete('book/delete/{book}',[BookController::class, 'destroy']);    
+
+
+    Route::get('borrow/index',[BorrowController::class, 'index']);
+    Route::get('borrow/show/{id}',[BorrowController::class, 'show']);
 
 
     // API route for logout user

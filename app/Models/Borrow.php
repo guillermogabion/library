@@ -10,6 +10,10 @@ class Borrow extends Model
     use HasFactory;
     protected $fillable = [
         'book_id',
+        'borrowed_date',
+        'return_date',
+        'status'
+
     ];
 
 

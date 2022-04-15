@@ -55,16 +55,16 @@
                             <v-select
                                 :items="[
                                     {
-                                      value:'1st'
+                                      value:'1st Year'
                                     },
                                     {
-                                      value:'2nd'
+                                      value:'2nd Year'
                                     },
                                     {
-                                      value:'3rd'
+                                      value:'3rd Year'
                                     },
                                     {
-                                      value:'4th'
+                                      value:'4th Year'
                                     }
                                 ]"
                                 item-text="value"

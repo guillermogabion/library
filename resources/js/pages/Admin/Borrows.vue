@@ -5,7 +5,7 @@
       outlined
     >
         <v-card-title>
-          <span class="text-h5">Borrow Books</span>
+          <span class="text-h5 font-weight-bold">Borrow Books</span>
         </v-card-title>
       <v-row>
           <v-col
@@ -47,9 +47,9 @@
           </v-row>
           <v-row>
             <v-text-field
-                v-model="form.count"
+                v-model="form.availlable"
                 class="mr-15 ml-15"
-                label="Count"
+                label="Number of Availlable"
                 outlined
                 required
                 disabled
@@ -97,9 +97,9 @@
         <v-divider />
         <div class="d-flex justify-center mt-5 mb-6 mr-15">
           <v-btn
-            depressed
-            color="blue darken-1"
-            text
+            rounded
+            class="ma-2"
+            color="info"
             @click="$emit('save')"
           >
             Borrow
@@ -119,14 +119,15 @@ export default {
               id:null,
               book_title:'',
               author: '',
-              count:'',
+              availlable:'',
               status:'',
           }
       }
     },
     data(){
       return{
-        items:[]
+        items:[],
+        users:[]
       }
     },
   mounted() {
@@ -138,6 +139,11 @@ export default {
           this.items = data
           
       })
+      this.$admin.get('student/index').then(({data})=> {
+          this.users = data
+          
+      })
+
     },
 
     customFilter (item, queryText, itemText) {
@@ -152,8 +158,8 @@ export default {
     change(item){
       this.form.book_title = item.book_title
       this.form.author = item.author
-      this.form.count = item.count
-      this.form.status = item.status
+      this.form.availlable = item.availlable
+      this.form.status = item.status == 1? 'Availlable' : 'Unavaillable'
 
     },
   }

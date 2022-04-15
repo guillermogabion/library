@@ -75,6 +75,13 @@ class TeacherController extends Controller
         $teacher = Teacher::findOrFail($id);
         $qrcode = QrCode::size(200)
                 ->generate($teacher->last_name.'_'.$teacher->email);
+
+        $img_value = $teacher->last_name.'_'.$teacher->email;
+
+        Teacher::where('id', $id)->update([
+            'qr_value' => $img_value    
+        ]);
+
         return $qrcode;
     }
 
