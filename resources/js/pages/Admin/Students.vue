@@ -192,7 +192,7 @@
       if(this.studentForm.id){
         console.log(this.studentForm);
         this.$admin.post('student/update/'+this.studentForm.id,this.studentForm).then(({data}) => {
-          this.successNotify('update');
+          this.successNotify('Update');
           console.log(data);
           this.initialize()
         })
@@ -201,7 +201,7 @@
           // console.log(this.studentForm);
           // return;
         this.$admin.post('student/create',this.studentForm).then(({data}) =>{
-          this.successNotify('created');
+          this.successNotify('Created');
           this.initialize()
         })
       }
@@ -215,6 +215,7 @@
 
     deleteStudent(student){
       this.$admin.delete('student/delete/'+ student.id).then(({data}) => {
+         this.successNotify('Deleted');
         this.initialize() 
       })
     }

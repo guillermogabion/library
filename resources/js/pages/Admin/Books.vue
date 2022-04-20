@@ -76,7 +76,7 @@
             sortable: false,
             value: 'id',
           },
-          { text: "Book Title", value: "book_title", align: 'center'},
+          { text: "Book Name", value: "book_title", align: 'center'},
           { text: "Author", value: "author", align: 'center' },
           { text: "Availlable Books", value: "availlable" , align: 'center'},
           { text: "Total", value: "total", align: 'center' },
@@ -142,6 +142,7 @@
         author:  book.author ,
         availlable: book.availlable ,
         total:book.total,
+        status:book.status
         // image: '/storage/'+product.image 
       }
       this.addition_edition_dailog = true
@@ -151,20 +152,21 @@
       //   return
       if(this.bookForm.id){
         this.$admin.post('book/update/'+this.bookForm.id,this.bookForm).then(({data}) => {
-          this.successNotify('update');
+          this.successNotify('Update');
           this.initialize()
         })
       }
       else{
         console.log(this.bookForm)
         this.$admin.post('book/create',this.bookForm).then(({data}) =>{
-          this.successNotify('created');
+          this.successNotify('Created');
           this.initialize()
         })
       }
     },
     deleteProduct(product){
       this.$admin.delete('book/delete/'+ product.id).then(({data}) => {
+         this.successNotify('Deleted');
         this.initialize() 
       })
     }

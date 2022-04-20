@@ -53,6 +53,7 @@ export default {
             { title: 'Student', icon: 'mdi-account-group', route: '/students' },
             { title: 'Teacher', icon: 'mdi-account-group', route: '/teachers' },
             { title: 'Borrow', icon: 'mdi-book-plus', route: '/borrows' },
+            { title: 'Borrowed Books', icon: 'mdi-book-plus', route: '/borrowed' },
         ],
     }),
     props : {

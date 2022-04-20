@@ -17,7 +17,6 @@
           >
           <v-row  >
             <v-autocomplete
-              v-model="form.book_title"
               :items="items"
               :filter="customFilter"
               item-text="book_title"
@@ -68,32 +67,84 @@
           <v-card-title>
             <span class="text-h5">Input Borrower Information</span>
           </v-card-title>
-        <v-row class="ml-2 mr-2">
-          <v-text-field
-              label="First Name"
-              outlined
-              required
-              class="mr-15"
-          ></v-text-field>
-           <v-text-field
-              label="Last Name"
-              outlined
-              required
-          ></v-text-field>
-        </v-row>
-        <v-row  class="ml-2 mr-2">
-           <v-text-field
-              label="Phone Number"
-              outlined
-              required
-              class="mr-15"
-          ></v-text-field>
-          <v-text-field
-              label="Email"
-              outlined
-              required
-          ></v-text-field>
-        </v-row>
+          <v-row  >
+            <v-col 
+              cols="8"
+              sm="10"
+              md="10"
+              class="ml-15">
+              <v-row>
+                <v-autocomplete
+                :items="student"
+                :filter="userFilter"
+                item-text="last_name"
+                label="Search Student"
+                hide-no-data
+                @change="(event)=>change(event)"
+                return-object
+                class="mr-15"
+                >
+                  <template v-slot:item ="{item}">
+                    {{item.first_name}} {{item.last_name}}
+                  </template>
+                  <template v-slot:selection ="{item}">
+                    {{item.first_name}} {{item.last_name}}
+                  </template>
+
+                </v-autocomplete>
+                <v-autocomplete
+                  :items="teacher"
+                  :filter="userFilter"
+                  item-text=""
+                  label="Search Teacher"
+                  hide-no-data
+                  @change="(event)=>change(event)"
+                  return-object
+                >
+                  <template v-slot:item ="{item}">
+                    {{item.first_name}} {{item.last_name}}
+                  </template>
+                  <template v-slot:selection ="{item}">
+                    {{item.first_name}} {{item.last_name}}
+                  </template>
+
+                </v-autocomplete>
+              </v-row>
+              <v-row class="ml-2 mr-2">
+                <v-text-field
+                    v-model="form.first_name"
+                    label="First Name"
+                    outlined
+                    required
+                    class="mr-15"
+                ></v-text-field>
+                <v-text-field
+                    v-model="form.last_name"
+                    label="Last Name"
+                    outlined
+                    required
+                ></v-text-field>
+              </v-row>
+              <v-row  class="ml-2 mr-2">
+                <v-text-field
+                    v-model="form.phone_number"
+                    label="Phone Number"
+                    outlined
+                    required
+                    class="mr-15"
+                ></v-text-field>
+                <v-text-field
+                    v-model="form.email"
+                    label="Email"
+                    outlined
+                    required
+                ></v-text-field>
+              </v-row>
+            </v-col>
+            
+          </v-row>
+       
+        
         <v-divider />
         <div class="d-flex justify-center mt-5 mb-6 mr-15">
           <v-btn
@@ -112,6 +163,7 @@
 <script>
 export default {
     props: {
+
       form: {
           type: Object,
           required: true,
@@ -121,26 +173,37 @@ export default {
               author: '',
               availlable:'',
               status:'',
+
+              first_name:'',
+              last_name:'',
+              phone_number:'',
+              email:''
           }
       }
     },
     data(){
       return{
         items:[],
-        users:[]
+        student:[],
+        teacher:[]
       }
     },
   mounted() {
     this.initialize()
   },
   methods: {
+
     initialize(){
       this.$admin.get('book/index').then(({data})=> {
           this.items = data
           
       })
       this.$admin.get('student/index').then(({data})=> {
-          this.users = data
+          this.student = data
+          
+      })
+       this.$admin.get('teacher/index').then(({data})=> {
+          this.teacher = data
           
       })
 
@@ -154,12 +217,24 @@ export default {
       return textOne.indexOf(searchText) > -1 ||
         textTwo.indexOf(searchText) > -1
     },
+    userFilter (item, queryText, itemText) {
+      const textOne = item.first_name.toLowerCase()
+      const textTwo = item.last_name.toLowerCase()
+      const searchText = queryText.toLowerCase()
 
+      return textOne.indexOf(searchText) > -1 ||
+        textTwo.indexOf(searchText) > -1
+    },
+    
     change(item){
       this.form.book_title = item.book_title
       this.form.author = item.author
       this.form.availlable = item.availlable
       this.form.status = item.status == 1? 'Availlable' : 'Unavaillable'
+      this.form.first_name = item.first_name
+      this.form.last_name = item.last_name
+      this.form.phone_number = item.phone_number
+      this.form.email = item.email
 
     },
   }

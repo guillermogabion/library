@@ -5,9 +5,15 @@
         outlined
     >
       <v-card-title class="text-h5 font-weight-bold">
-       {{student.first_name}} Book/s Borrowed
-      </v-card-title>
-      <v-card-title>
+       Borrowed Books List
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
       </v-card-title>
       <v-data-table
         :footer-props="footerProps"
@@ -23,13 +29,6 @@
           </v-btn>
         </template>
       </v-data-table>
-       <v-spacer></v-spacer>
-            <div class="d-flex justify-end mt-5 mb-5 mr-5">
-                <v-btn color="black" outlined @click="$router.back()"> 
-                    <v-icon left dark>mdi-logout</v-icon>
-                    Back
-                </v-btn>
-            </div>
     </v-card>
 </div>
 </template>
@@ -40,6 +39,7 @@
             footerProps :{
                 "items-per-page-options" : [5,10,15,30,]
             },
+            search: '',
             student:{},
             borrow: [],
             headers: [

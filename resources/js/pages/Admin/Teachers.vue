@@ -104,7 +104,7 @@
             value: 'id',
           },
           { text: "First Name", value: "first_name",align: 'center' },
-          { text: "Last Name", value: "first_name",align: 'center' },
+          { text: "Last Name", value: "last_name",align: 'center' },
           { text: "Phone Number", value: "phone_number",align: 'center' },
           { text: "Email", value: "email",align: 'center' },
           { text: "Actions", value: "actions", sortable: false,align: 'center' },
@@ -182,13 +182,13 @@
       if(this.teacherForm.id){
         this.$admin.post('teacher/update/'+this.teacherForm.id,this.teacherForm).then(({data}) => {
           console.log(data);
-          this.successNotify('update');
+          this.successNotify('Update');
           this.initialize()
         })
       }
       else{
         this.$admin.post('teacher/create',this.teacherForm).then(({data}) =>{
-          this.successNotify('created');
+          this.successNotify('Created');
           this.initialize()
         })
       }
@@ -202,6 +202,7 @@
 
     deleteTeacher(teacher){
       this.$admin.delete('teacher/delete/'+ teacher.id).then(({data}) => {
+         this.successNotify('Deleted');
         this.initialize() 
       })
     }
