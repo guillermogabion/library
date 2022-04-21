@@ -5,52 +5,50 @@
       outlined
     >
         <v-card-title>
-          <span class="text-h5">Book Information</span>
+          <span class="text-h5 font-weight-bold">Borrow Books</span>
         </v-card-title>
       <v-row>
           <v-col
-            cols="4"
-            md="4"
-            sm="4"
-          >
-            <v-img
-                lazy-src="https://picsum.photos/id/11/10/6"
-                max-height="250"
-                max-width="250"
-                height="200"
-                :src="form.image ? form.image : 'https://cdn.vuetifyjs.com/images/parallax/material2.jpg'"
-            ></v-img>
-            <v-btn 
-                icon 
-                large
-                color="light-blue" 
-                @click="$refs.inputUpload.click()"
-            >
-                <!-- <v-icon>mdi-image-plus</v-icon>  -->Scan Qr
-            </v-btn>
-            <input v-show="false" ref="inputUpload" type="file" @change="processImage" >
-          </v-col>
-          <v-col
             cols="8"
-            sm="8"
-            md="8"
+            sm="10"
+            md="10"
+            class="ml-15"
+
           >
-          <v-row>
+          <v-row  >
             <v-autocomplete
-            v-model="values"
-            :items="items"
-            outlined
-            dense
-            chips
-            small-chips
-            label="Select Book/s"
-            multiple
-          ></v-autocomplete>
+              :items="items"
+              :filter="customFilter"
+              item-text="book_title"
+              label="Search Book/s"
+              hide-no-data
+              @change="(event)=>change(event)"
+              return-object
+              class="ml-15"
+            ></v-autocomplete>
           </v-row>
           <v-row>
             <v-text-field
-                class="mr-5"
-                label="Count"
+              v-model="form.book_title"
+                class="mr-15 ml-15"
+                label="Book Title"
+                outlined
+                required
+                disabled
+            ></v-text-field>
+            <v-text-field
+              v-model="form.author"
+                label="Author"
+                outlined
+                required
+                disabled
+            ></v-text-field>
+          </v-row>
+          <v-row>
+            <v-text-field
+                v-model="form.availlable"
+                class="mr-15 ml-15"
+                label="Number of Availlable"
                 outlined
                 required
                 disabled
@@ -59,15 +57,7 @@
                 label="Status"
                 outlined
                 required
-                disabled
-            ></v-text-field>
-          </v-row>
-          <v-row>
-            <v-text-field
-                label="Author"
-                outlined
-                required
-                v-model="form.name"
+                v-model="form.status"
                 disabled
             ></v-text-field>
           </v-row>
@@ -75,75 +65,179 @@
       </v-row>
         <v-divider></v-divider>
           <v-card-title>
-            <span class="text-h5">Borrower Information</span>
+            <span class="text-h5">Input Borrower Information</span>
           </v-card-title>
-        <v-row class="ml-2">
-          <v-select
-            class="col-3 mr-2"
-            v-model="value"
-            :items="items"
-            chips
-            label="User Type"
-            multiple
-            outlined
-          ></v-select>
-          <v-select
-            class="col-5 mr-2"
-            v-model="value"
-            :items="items"
-            chips
-            label="Course"
-            multiple
-            outlined
-          ></v-select>
-          <v-select
-            class="col-3"
-            v-model="value"
-            :items="items"
-            chips
-            label="Year"
-            multiple
-            outlined
-          ></v-select>
-        </v-row>
-        <v-row class="ml-2">
-          <v-autocomplete
-            v-model="values"
-            :items="items"
-            outlined
-            dense
-            chips
-            small-chips
-            multiple
-            label="User Name"
-          ></v-autocomplete>
-        </v-row>
+          <v-row  >
+            <v-col 
+              cols="8"
+              sm="10"
+              md="10"
+              class="ml-15">
+              <v-row>
+                <v-autocomplete
+                :items="student"
+                :filter="userFilter"
+                item-text="last_name"
+                label="Search Student"
+                hide-no-data
+                @change="(event)=>change(event)"
+                return-object
+                class="mr-15"
+                >
+                  <template v-slot:item ="{item}">
+                    {{item.first_name}} {{item.last_name}}
+                  </template>
+                  <template v-slot:selection ="{item}">
+                    {{item.first_name}} {{item.last_name}}
+                  </template>
+
+                </v-autocomplete>
+                <v-autocomplete
+                  :items="teacher"
+                  :filter="userFilter"
+                  item-text=""
+                  label="Search Teacher"
+                  hide-no-data
+                  @change="(event)=>change(event)"
+                  return-object
+                >
+                  <template v-slot:item ="{item}">
+                    {{item.first_name}} {{item.last_name}}
+                  </template>
+                  <template v-slot:selection ="{item}">
+                    {{item.first_name}} {{item.last_name}}
+                  </template>
+
+                </v-autocomplete>
+              </v-row>
+              <v-row class="ml-2 mr-2">
+                <v-text-field
+                    v-model="form.first_name"
+                    label="First Name"
+                    outlined
+                    required
+                    class="mr-15"
+                ></v-text-field>
+                <v-text-field
+                    v-model="form.last_name"
+                    label="Last Name"
+                    outlined
+                    required
+                ></v-text-field>
+              </v-row>
+              <v-row  class="ml-2 mr-2">
+                <v-text-field
+                    v-model="form.phone_number"
+                    label="Phone Number"
+                    outlined
+                    required
+                    class="mr-15"
+                ></v-text-field>
+                <v-text-field
+                    v-model="form.email"
+                    label="Email"
+                    outlined
+                    required
+                ></v-text-field>
+              </v-row>
+            </v-col>
+            
+          </v-row>
+       
+        
+        <v-divider />
+        <div class="d-flex justify-center mt-5 mb-6 mr-15">
+          <v-btn
+            rounded
+            class="ma-2"
+            color="info"
+            @click="$emit('save')"
+          >
+            Borrow
+          </v-btn>
+        </div>
     </v-card>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    form: {
-        type: Object,
-        required: true,
-        default: {
-            id:null,
-            name:'',
-            email:'',
-            password:'',
-            // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
-        }
-    }
-  },
+    props: {
+
+      form: {
+          type: Object,
+          required: true,
+          default: {
+              id:null,
+              book_title:'',
+              author: '',
+              availlable:'',
+              status:'',
+
+              first_name:'',
+              last_name:'',
+              phone_number:'',
+              email:''
+          }
+      }
+    },
+    data(){
+      return{
+        items:[],
+        student:[],
+        teacher:[]
+      }
+    },
   mounted() {
+    this.initialize()
   },
   methods: {
-  },
+
+    initialize(){
+      this.$admin.get('book/index').then(({data})=> {
+          this.items = data
+          
+      })
+      this.$admin.get('student/index').then(({data})=> {
+          this.student = data
+          
+      })
+       this.$admin.get('teacher/index').then(({data})=> {
+          this.teacher = data
+          
+      })
+
+    },
+
+    customFilter (item, queryText, itemText) {
+      const textOne = item.book_title.toLowerCase()
+      const textTwo = item.author.toLowerCase()
+      const searchText = queryText.toLowerCase()
+
+      return textOne.indexOf(searchText) > -1 ||
+        textTwo.indexOf(searchText) > -1
+    },
+    userFilter (item, queryText, itemText) {
+      const textOne = item.first_name.toLowerCase()
+      const textTwo = item.last_name.toLowerCase()
+      const searchText = queryText.toLowerCase()
+
+      return textOne.indexOf(searchText) > -1 ||
+        textTwo.indexOf(searchText) > -1
+    },
+    
+    change(item){
+      this.form.book_title = item.book_title
+      this.form.author = item.author
+      this.form.availlable = item.availlable
+      this.form.status = item.status == 1? 'Availlable' : 'Unavaillable'
+      this.form.first_name = item.first_name
+      this.form.last_name = item.last_name
+      this.form.phone_number = item.phone_number
+      this.form.email = item.email
+
+    },
+  }
 }
 </script>
 
-<style>
-
-</style>

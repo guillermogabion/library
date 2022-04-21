@@ -4,8 +4,8 @@
         class="mx-auto px-5 py-5"
         outlined
     >
-      <v-card-title>
-        Students
+      <v-card-title class="text-h5 font-weight-bold">
+        List of Students
       <v-spacer></v-spacer>
         <v-icon
           large
@@ -14,14 +14,37 @@
           mdi-plus
         </v-icon>
       </v-card-title>
+      <v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
       <v-data-table
         :footer-props="footerProps"
         :headers="headers"
         :items="students"
+        :search="search"
         :loading="loading"
         class="elevation-1"
       >
+        <template v-slot:item.courseYear="{item}">
+          {{item.year}} {{item.course}}
+        </template>
         <template v-slot:item.actions="{item}">
+          <v-btn class="mr-2" x-small color="success" @click="showDialog = true, generate(item)">
+            View QR
+          </v-btn>
+          <v-icon 
+            class="mr-2" 
+            @click="$router.push('/student-view/'+item.id)"
+          >
+            mdi-eye
+          </v-icon>
           <v-icon
             class="mr-2"
             @click="editStudent(item)"
@@ -37,7 +60,27 @@
       </v-data-table>
     </v-card>
     <StudentForm :form="studentForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveStudent()" />
-
+    <v-row justify="center">
+      <v-dialog
+          v-model="showDialog"
+          persistent
+          max-width="290"
+      >
+        <v-card>
+          <v-card-title class="primary headline" style="font-weight:bold; color:white;">
+              Student QR Code
+              <v-spacer></v-spacer>
+                <v-icon color="white" @click="showDialog = false" >
+                    mdi-close-circle-outline
+                </v-icon>
+          </v-card-title>
+          <v-card-text class="mt-4">Please Take a Pic or Screenshot this.</v-card-text>
+          <v-card-actions>
+                <div class="mt-5 mb-5 mx-auto " v-html="qr_code"></div>
+          </v-card-actions>
+      </v-card>
+      </v-dialog>
+    </v-row>
 </div>
 </template>
 <script>
@@ -49,21 +92,34 @@
     data() {
       return {
         students: [],
+        qr_code:{},
+        search: '',
+        showDialog: false,
         loading: true,
         footerProps :{
           "items-per-page-options" : [5,10,15,30,]
         },
         headers: [
-          { text: "Name", value: "name" },
-          { text: "Email", value: "email" },
-          { text: "Course", value: "course" },
-          { text: "Year", value: "year" },
-          { text: "Actions", value: "actions", sortable: false, },
+          {
+            text: 'ID',
+            align: 'center',
+            sortable: false,
+            value: 'id',
+          },
+          { text: "First Name", value: "first_name",align: 'center' },
+          { text: "Last Name", value: "last_name",align: 'center' },
+          { text: "Phone Number", value: "phone_number",align: 'center' },
+          { text: "Email", value: "email",align: 'center' },
+          { text: "Year/Course", value: "courseYear",align: 'center' },
+          // { text: "Year", value: "year",align: 'center' },
+          { text: "Actions", value: "actions", sortable: false,align: 'center' },
         ],
         addition_edition_dailog: false,
         studentForm: {
           id:null,
-          name: '',
+          first_name: '',
+          last_name: '',
+          phone_number: '',
           email: '',
           course:'',
           year: null,
@@ -85,11 +141,12 @@
     initialize() {
         this.studentForm = {
           id:null,
-          name: '',
+          first_name: '',
+          last_name: '',
+          phone_number: '',
           email: '',
           course:'',
           year: '',
-          password: '',
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
@@ -101,22 +158,27 @@
             this.students = data.data;
           });
     },
+
     addStudent(){
       this.studentForm = {
         id:null,
-        name: '',
+        first_name: '',
+        last_name: '',
+        phone_number: '',
         email: '',
         course:'',
         year: '',
-        password: '',
         // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
       }
       this.addition_edition_dailog = true
     },
+
     editStudent(student){
       this.studentForm = {
         id: student.id,
-        name:  student.name ,
+        first_name:  student.first_name ,
+        last_name:  student.last_name ,
+        phone_number: student.phone_number,
         email:  student.email ,
         course: student.course ,
         year: student.year ,
@@ -125,10 +187,12 @@
       }
       this.addition_edition_dailog = true
     },
+
     saveStudent(){
       if(this.studentForm.id){
         console.log(this.studentForm);
         this.$admin.post('student/update/'+this.studentForm.id,this.studentForm).then(({data}) => {
+          this.successNotify('Update');
           console.log(data);
           this.initialize()
         })
@@ -137,12 +201,21 @@
           // console.log(this.studentForm);
           // return;
         this.$admin.post('student/create',this.studentForm).then(({data}) =>{
+          this.successNotify('Created');
           this.initialize()
         })
       }
     },
+
+    generate(student){
+      this.$admin.get('student/generate/'+ student.id).then(({data}) => {
+        this.qr_code =  data
+      })
+    },
+
     deleteStudent(student){
       this.$admin.delete('student/delete/'+ student.id).then(({data}) => {
+         this.successNotify('Deleted');
         this.initialize() 
       })
     }

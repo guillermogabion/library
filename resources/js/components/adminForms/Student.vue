@@ -21,9 +21,20 @@
                     <v-row>
                         <v-col>
                             <v-text-field
-                                label="*Name"
+                                label="* First Name"
                                 required
-                                v-model="form.name"
+                                v-model="form.first_name"
+                            ></v-text-field>
+                            <v-text-field
+                                label="*Last Name"
+                                required
+                                v-model="form.last_name"
+                            ></v-text-field>
+                            <v-text-field
+                                label="*Phone Number"
+                                required
+                                type="number"
+                                v-model="form.phone_number"
                             ></v-text-field>
                             <v-text-field
                                 label="*Email"
@@ -44,16 +55,16 @@
                             <v-select
                                 :items="[
                                     {
-                                      value:'1st'
+                                      value:'1st Year'
                                     },
                                     {
-                                      value:'2nd'
+                                      value:'2nd Year'
                                     },
                                     {
-                                      value:'3rd'
+                                      value:'3rd Year'
                                     },
                                     {
-                                      value:'4th'
+                                      value:'4th Year'
                                     }
                                 ]"
                                 item-text="value"
@@ -61,12 +72,7 @@
                                 label="*Year"
                                 v-model="form.year"
                             ></v-select>
-                            <v-text-field v-if="form.id == null"
-                                label="*Password"
-                                required
-                                type="password"
-                                v-model="form.password"
-                            ></v-text-field>
+                            
                             <p>*indicates required field</p>
 
                         </v-col>
@@ -134,11 +140,12 @@
             required: true,
             default: {
                 id:null,
-                name:'',
+                first_name: '',
+                last_name: '',
+                phone_number: '',
                 email:'',
                 course:'',
                 year: '',
-                password: '',
                 // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
         }

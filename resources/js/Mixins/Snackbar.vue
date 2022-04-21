@@ -5,7 +5,7 @@ export default {
       
         successNotify(event) {
             this.$root.$notify(
-                event+" successfully",
+                event+" Successfully",
                 {
                     left : false, right : true,bottom : true, top : false
                 },

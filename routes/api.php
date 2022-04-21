@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
@@ -40,6 +41,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('student/create',[StudentController::class, 'store']);
     Route::get('student/show/{id}',[StudentController::class, 'show']);
     Route::post('student/update/{id}',[StudentController::class, 'update']);
+    Route::get('student/generate/{id}',[StudentController::class, 'generate']);
     Route::delete('student/delete/{student}',[StudentController::class, 'destroy']);
 
 
@@ -47,6 +49,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('teacher/create',[TeacherController::class, 'store']);
     Route::get('teacher/show/{id}',[TeacherController::class, 'show']);
     Route::post('teacher/update/{id}',[TeacherController::class, 'update']);
+    Route::get('teacher/generate/{id}',[TeacherController::class, 'generate']);
     Route::delete('teacher/delete/{teacher}',[TeacherController::class, 'destroy']);    
 
 
@@ -55,6 +58,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('book/show/{id}',[BookController::class, 'show']);
     Route::post('book/update/{id}',[BookController::class, 'update']);
     Route::delete('book/delete/{book}',[BookController::class, 'destroy']);    
+
+
+    Route::get('borrow/index',[BorrowController::class, 'index']);
+    Route::get('borrow/show/{id}',[BorrowController::class, 'show']);
 
 
     // API route for logout user

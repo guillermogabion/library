@@ -35,7 +35,9 @@
                                 label="*Password"
                                 required
                                 v-model="form.password"
-                                type="password"
+                                :type="show_pass ? 'text' : 'password'"
+                                :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
+                                @click:append="show_pass = !show_pass"
                             ></v-text-field>
                             <p>*indicates required field</p>
 
@@ -89,6 +91,7 @@
     },
     data: () => ({
       dialog: false,
+      show_pass: false,
     }),
     methods : {
         // processImage(e){

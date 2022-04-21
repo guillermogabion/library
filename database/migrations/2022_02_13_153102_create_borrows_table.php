@@ -16,10 +16,13 @@ class CreateBorrowsTable extends Migration
         Schema::create('borrows', function (Blueprint $table) {
             $table->increments('id');
             $table->morphs('borrowerable');
+            $table->unsignedInteger('book_id');
             $table->foreign('book_id')
                 ->references('id')
                 ->on('books')
                 ->onDelete('cascade');
+            $table->date('borrowed_date');
+            $table->date('return_date')->nullable();
             $table->timestamps();
         });
     }

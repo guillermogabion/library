@@ -4,7 +4,7 @@
         class="mx-auto px-5 py-5"
         outlined
     >
-      <v-card-title>
+      <v-card-title class="text-h5 font-weight-bold">
         Administrators
       <v-spacer></v-spacer>
         <v-icon
@@ -54,9 +54,15 @@
           "items-per-page-options" : [5,10,15, 30, ]
         },
         headers: [
-          { text: "Name", value: "name" },
-          { text: "Email", value: "email" },
-          { text: "Actions", value: "actions", sortable: false, },
+          {
+            text: 'ID',
+            align: 'center',
+            sortable: false,
+            value: 'id',
+          },
+          { text: "Name", value: "name", align: 'center', },
+          { text: "Email", value: "email", align: 'center', },
+          { text: "Actions", value: "actions", sortable: false, align: 'center', },
         ],
         addition_edition_dailog: false,
         adminForm: {

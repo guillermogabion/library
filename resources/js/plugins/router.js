@@ -9,6 +9,9 @@ import Admins from '../pages/Admin/Admins.vue';
 import Students from '../pages/Admin/Students.vue';
 import Teachers from '../pages/Admin/Teachers.vue';
 import Borrows from '../pages/Admin/Borrows.vue';
+import studentView from '../pages/View/Student.vue';
+import teacherView from '../pages/View/Teacher.vue';
+import Borrowed from '../pages/Admin/Borroweds.vue'
 
 Vue.use(VueRouter);
 
@@ -52,7 +55,21 @@ const router = new VueRouter({
                     name: 'borrows',
                     component: Borrows,
                 },
-
+                {
+                    path: '/student-view/:id',
+                    name: 'student-view',
+                    component: studentView,
+                },
+                {
+                    path: '/teacher-view/:id',
+                    name: 'teacher-view',
+                    component: teacherView,
+                },
+                {
+                    path: '/borrowed',
+                    name: 'borrowed',
+                    component: Borrowed,
+                },
             ]
         },
         {

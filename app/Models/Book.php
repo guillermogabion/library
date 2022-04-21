@@ -14,7 +14,8 @@ class Book extends Model
     protected $fillable = [
         'book_title',
         'author',
-        'count',
+        'availlable',
+        'total',
         'status',
     ];
 

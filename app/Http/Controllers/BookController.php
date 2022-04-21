@@ -19,16 +19,16 @@ class BookController extends Controller
         $request->validate([
             'book_title'=>'required',
             'author'=>'required',
-            'count'=>'required',
-            'status'=>'required',
+            'total'=>'required',
 
         ]);
 
         $book = Book::create([
             'book_title'=> $request->book_title,
             'author'=> $request->author,
-            'count'=> $request->count,
-            'status'=>$request->status,
+            'availlable'=>$request->total,
+            'total'=> $request->total,
+            'status'=>Book::Available,
 
 
         ]);
@@ -50,7 +50,7 @@ class BookController extends Controller
         $request->validate([
             'book_title'=>'required',
             'author'=>'required',
-            'count'=>'required',
+            'total'=>'required',
             'status'=>'required',
 
         ]);
@@ -60,7 +60,8 @@ class BookController extends Controller
         ->update([
             'book_title'=> $request->book_title,
             'author'=> $request->author,
-            'count'=> $request->count,
+            'availlable'=> $request->total,
+            'total'=> $request->total,
             'status'=>$request->status,
 
         ]);
