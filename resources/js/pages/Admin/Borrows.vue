@@ -75,37 +75,20 @@
               class="ml-15">
               <v-row>
                 <v-autocomplete
-                :items="student"
+                :items="users"
                 :filter="userFilter"
                 item-text="last_name"
-                label="Search Student"
+                label="Search User"
                 hide-no-data
-                @change="(event)=>change(event)"
+                @change="(event)=>changeUser(event)"
                 return-object
-                class="mr-15"
+                
                 >
                   <template v-slot:item ="{item}">
-                    {{item.first_name}} {{item.last_name}}
+                    {{item.first_name}} {{item.last_name}} ({{item.type}})
                   </template>
                   <template v-slot:selection ="{item}">
-                    {{item.first_name}} {{item.last_name}}
-                  </template>
-
-                </v-autocomplete>
-                <v-autocomplete
-                  :items="teacher"
-                  :filter="userFilter"
-                  item-text=""
-                  label="Search Teacher"
-                  hide-no-data
-                  @change="(event)=>change(event)"
-                  return-object
-                >
-                  <template v-slot:item ="{item}">
-                    {{item.first_name}} {{item.last_name}}
-                  </template>
-                  <template v-slot:selection ="{item}">
-                    {{item.first_name}} {{item.last_name}}
+                    {{item.first_name}} {{item.last_name}} ({{item.type}})
                   </template>
 
                 </v-autocomplete>
@@ -162,30 +145,30 @@
 
 <script>
 export default {
-    props: {
+    data(){
+      return{
+        items:[],
+        users: [],
+        student:[],
+        teacher:[],
 
-      form: {
-          type: Object,
-          required: true,
-          default: {
+        form: {
               id:null,
               book_title:'',
               author: '',
               availlable:'',
               status:'',
 
+
+              user_id: null,
+              user_type: '',
               first_name:'',
               last_name:'',
               phone_number:'',
               email:''
+
+
           }
-      }
-    },
-    data(){
-      return{
-        items:[],
-        student:[],
-        teacher:[]
       }
     },
   mounted() {
@@ -200,9 +183,31 @@ export default {
       })
       this.$admin.get('student/index').then(({data})=> {
           this.student = data
+
+          this.users = data.map((student) => {
+            return {
+              ...student,
+              type : 'student'
+            }
+          })
+          var vm = this
+
+          this.$admin.get('teacher/index').then(({data})=> {
+            vm.teacher = data.map((teacher)=> {
+
+              return {
+                ...teacher,
+                type: 'teacher'
+              }
+            })
+
+            vm.users.push.apply(vm.users, vm.teacher)
+          
+          })
+
           
       })
-       this.$admin.get('teacher/index').then(({data})=> {
+      this.$admin.get('teacher/index').then(({data})=> {
           this.teacher = data
           
       })
@@ -227,16 +232,21 @@ export default {
     },
     
     change(item){
+      this.form.id = item.id
       this.form.book_title = item.book_title
       this.form.author = item.author
       this.form.availlable = item.availlable
       this.form.status = item.status == 1? 'Availlable' : 'Unavaillable'
-      this.form.first_name = item.first_name
-      this.form.last_name = item.last_name
-      this.form.phone_number = item.phone_number
-      this.form.email = item.email
 
     },
+    changeUser(user) {
+        this.form.user_id = user.id
+        this.form.user_type = user.type
+        this.form.first_name = user.first_name
+        this.form.last_name = user.last_name
+        this.form.phone_number = user.phone_number
+        this.form.email = user.email
+    }
   }
 }
 </script>
