@@ -44,22 +44,37 @@ class BorrowController extends Controller
             $user = Student::find($request->user_id);
         }
 
-        $user->borrows()->create([
-            'book_id' => $request->id,
-            'date' => $date,
-            'hide' => 'NO'
+        $exists = Borrow::where('borrowerable_id', $user->id)->where('book_id', $request->id)->where('hide', 'NO')->exists();
+        $borrowCount = Borrow::where('borrowerable_id', $user->id)->where('hide', 'NO')->get();
 
-        ]);
+        if($exists){
+            return "Already Borrowed Same Book";
+        }
+        else{
+            if(count($borrowCount) == 3){
+                return "Already Borrowed 3 Books";
+            }
+            else{
 
-        $book = Book::find($request->id);
+                $user->borrows()->create([
+                    'book_id' => $request->id,
+                    'date' => $date,
+                    'hide' => 'NO'
+        
+                ]);
+        
+                $book = Book::find($request->id);
+        
+                $count = (int)$book->available;
+                $count--;
+                $book->available = $count;
+                $book->save();
+        
+                return "Success";
+            }
 
-        $count = (int)$book->available;
-        $count--;
-        $book->available = $count;
-        $book->save();
-
-
-        return "Success";
+        }
+        
     }
 
     public function update(Request $request, $id)
