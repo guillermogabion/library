@@ -61,7 +61,11 @@ Route::group(['middleware' => ['auth:api']], function () {
 
 
     Route::get('borrow/index',[BorrowController::class, 'index']);
+    Route::get('borrow/returned',[BorrowController::class, 'returned']);
+    Route::post('borrow/create',[BorrowController::class, 'store']);
     Route::get('borrow/show/{id}',[BorrowController::class, 'show']);
+    Route::post('borrow/update/{id}',[BorrowController::class, 'update']);
+
 
 
     // API route for logout user

@@ -34,7 +34,7 @@
         class="elevation-1"
       >
          <template v-slot:item.status ="{ item }">
-                        {{item.status == 1 ? 'Available' : 'Unavaillable'}}
+                        {{item.status == 1 ? 'Available' : 'Unavailable'}}
                     </template>
         <template v-slot:item.actions="{ item }">
           <v-icon
@@ -78,8 +78,8 @@
           },
           { text: "Book Name", value: "book_title", align: 'center'},
           { text: "Author", value: "author", align: 'center' },
-          { text: "Availlable Books", value: "availlable" , align: 'center'},
-          { text: "Total", value: "total", align: 'center' },
+          { text: "Available Books", value: "available" , align: 'center'},
+          { text: "Total Books", value: "total", align: 'center' },
           { text: "Status", value: "status", align: 'center'},
           { text: "Actions", value: "actions", sortable: false,align: 'center' },
         ],
@@ -88,7 +88,7 @@
           id:null,
           book_title: '',
           author: '',
-          availlable: 0,
+          available: 0,
           total:0
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
@@ -110,7 +110,7 @@
           id:null,
           book_title: '',
           author: '',
-          availlable: 0,
+          available: 0,
           total:0
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
@@ -129,7 +129,7 @@
         id:null,
         book_title: '',
         author: '',
-        availlable: 0,
+        available: 0,
         total:0
         // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
       }
@@ -140,7 +140,7 @@
         id: book.id,
         book_title:  book.book_title ,
         author:  book.author ,
-        availlable: book.availlable ,
+        available: book.available ,
         total:book.total,
         status:book.status
         // image: '/storage/'+product.image 

@@ -44,7 +44,7 @@ class StudentController extends Controller
     
     public function show($id)
     {
-        $student = Student::find($id);
+        $student = Student::with('borrows')->find($id);
 
         return $student;
     }

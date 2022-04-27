@@ -5,12 +5,12 @@
         outlined
     >
       <v-card-title class="text-h5 font-weight-bold">
-       Borrowed Books List
+       Borrowed Books 
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Search"
+          label="Search Book Borrowed"
           single-line
           hide-details
         ></v-text-field>
@@ -18,13 +18,18 @@
       <v-data-table
         :footer-props="footerProps"
         :headers="headers"
-        :items="borrow"
+        :items="borrows"
         :search="search"
         :loading="loading"
         class="elevation-1"
       >
+        <template v-slot:item.name ="{item}">
+
+          {{item.borrowerable.first_name}} {{item.borrowerable.last_name}}
+        
+        </template>
         <template v-slot:item.action="{item}">
-           <v-btn class="mr-2" small color="success">
+           <v-btn class="mr-2" small color="success" @click="returnBook(item)">
             Return Book
           </v-btn>
         </template>
@@ -41,7 +46,8 @@
             },
             search: '',
             student:{},
-            borrow: [],
+            loading: true,
+            borrows: [],
             headers: [
             {
                 text: 'ID',
@@ -49,9 +55,11 @@
                 sortable: false,
                 value: 'id',
             },
-            {text: 'Book Name', align: 'center', value: 'slot_id'},
-            {text: 'Author', align: 'center', value: 'date'},
-            {text: 'Borrowed On', align: 'center', value: 'start_time'},
+            {text: 'Borrower Name', align: 'center', value: 'name'},
+            {text: 'Book Name', align: 'center', value: 'book.book_title'},
+            {text: 'Book Name', align: 'center', value: 'book.book_title'},
+            {text: 'Author', align: 'center', value: 'book.author'},
+            {text: 'Borrowed On', align: 'center', value: 'date'},
             {text: 'Action', align: 'center', value: 'action'},
             ],
         }
@@ -61,15 +69,23 @@
           this.initialize()
       },
       methods : { 
-          initialize(){
-              this.$admin.get('/student/show/'+this.$route.params.id).then(({data}) => {
-                  this.student = data
-                //   this.borrow = data
-              })
-          },
+        initialize(){
+            this.$admin.get('borrow/index').then(({data}) => {
+              this.borrows = data
+              this.loading = false;
 
+            })
+        },
+
+        returnBook(item){
+          this.$admin.post('borrow/update/'+ item.id, item).then(({data}) => {
+            console.log(item);
+            this.successNotify('Return');
+            this.initialize() 
+          })
+        }
          
 
-    }
+      }
   }
 </script>

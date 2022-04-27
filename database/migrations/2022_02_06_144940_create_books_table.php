@@ -17,7 +17,7 @@ class CreateBooksTable extends Migration
             $table->increments('id');
             $table->string('book_title');
             $table->string('author');
-            $table->integer('availlable')->nullable();
+            $table->integer('available')->nullable();
             $table->integer('total');
             $table->integer('status'); // 1 = Available, 2 = Unavailable
             $table->timestamps();

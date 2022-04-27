@@ -26,7 +26,7 @@ class BookController extends Controller
         $book = Book::create([
             'book_title'=> $request->book_title,
             'author'=> $request->author,
-            'availlable'=>$request->total,
+            'available'=>$request->total,
             'total'=> $request->total,
             'status'=>Book::Available,
 
@@ -60,7 +60,7 @@ class BookController extends Controller
         ->update([
             'book_title'=> $request->book_title,
             'author'=> $request->author,
-            'availlable'=> $request->total,
+            'available'=> $request->total,
             'total'=> $request->total,
             'status'=>$request->status,
 

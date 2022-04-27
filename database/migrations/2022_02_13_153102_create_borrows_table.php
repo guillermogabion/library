@@ -21,8 +21,10 @@ class CreateBorrowsTable extends Migration
                 ->references('id')
                 ->on('books')
                 ->onDelete('cascade');
-            $table->date('borrowed_date');
+            $table->date('date');
             $table->date('return_date')->nullable();
+            $table->string('hide');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

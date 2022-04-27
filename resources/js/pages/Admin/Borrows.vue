@@ -24,7 +24,7 @@
               hide-no-data
               @change="(event)=>change(event)"
               return-object
-              class="ml-15"
+              class="ml-15 "
             ></v-autocomplete>
           </v-row>
           <v-row>
@@ -98,12 +98,14 @@
                     v-model="form.first_name"
                     label="First Name"
                     outlined
+                    disabled
                     required
                     class="mr-15"
                 ></v-text-field>
                 <v-text-field
                     v-model="form.last_name"
                     label="Last Name"
+                    disabled
                     outlined
                     required
                 ></v-text-field>
@@ -113,6 +115,7 @@
                     v-model="form.phone_number"
                     label="Phone Number"
                     outlined
+                    disabled
                     required
                     class="mr-15"
                 ></v-text-field>
@@ -120,6 +123,7 @@
                     v-model="form.email"
                     label="Email"
                     outlined
+                    disabled
                     required
                 ></v-text-field>
               </v-row>
@@ -134,7 +138,7 @@
             rounded
             class="ma-2"
             color="info"
-            @click="$emit('save')"
+            @click="borrowBook()"
           >
             Borrow
           </v-btn>
@@ -177,6 +181,23 @@ export default {
   methods: {
 
     initialize(){
+
+      this.form ={
+         id:null,
+              book_title:'',
+              author: '',
+              availlable:'',
+              status:'',
+
+
+              user_id: null,
+              user_type: '',
+              first_name:'',
+              last_name:'',
+              phone_number:'',
+              email:''
+      }
+      
       this.$admin.get('book/index').then(({data})=> {
           this.items = data
           
@@ -246,8 +267,18 @@ export default {
         this.form.last_name = user.last_name
         this.form.phone_number = user.phone_number
         this.form.email = user.email
+    },
+
+    borrowBook(){
+      this.$admin.post('borrow/create',this.form).then(({data}) =>{
+        this.successNotify('Borrow');
+        this.initialize()
+      })
     }
+    
+   
   }
 }
 </script>
+
 

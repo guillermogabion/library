@@ -12,16 +12,10 @@
       <v-data-table
         :footer-props="footerProps"
         :headers="headers"
-        :items="borrow"
-        :search="search"
+        :items="borrows"
         :loading="loading"
         class="elevation-1"
       >
-        <template v-slot:item.action="{item}">
-           <v-btn class="mr-2" small color="success">
-            Return Book
-          </v-btn>
-        </template>
       </v-data-table>
        <v-spacer></v-spacer>
             <div class="d-flex justify-end mt-5 mb-5 mr-5">
@@ -41,7 +35,8 @@
                 "items-per-page-options" : [5,10,15,30,]
             },
             student:{},
-            borrow: [],
+            borrows: [],
+            loading: true,
             headers: [
             {
                 text: 'ID',
@@ -49,10 +44,8 @@
                 sortable: false,
                 value: 'id',
             },
-            {text: 'Book Name', align: 'center', value: 'slot_id'},
-            {text: 'Author', align: 'center', value: 'date'},
-            {text: 'Borrowed On', align: 'center', value: 'start_time'},
-            {text: 'Action', align: 'center', value: 'action'},
+            {text: 'Book ID', align: 'center', value: 'book_id'},
+            {text: 'Borrowed On', align: 'center', value: 'date'},
             ],
         }
       },
@@ -64,6 +57,9 @@
           initialize(){
               this.$admin.get('/student/show/'+this.$route.params.id).then(({data}) => {
                   this.student = data
+                  this.borrows = data.borrows
+                  this.loading = false;
+
                 //   this.borrow = data
               })
           },

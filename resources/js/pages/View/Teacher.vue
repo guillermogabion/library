@@ -12,7 +12,7 @@
       <v-data-table
         :footer-props="footerProps"
         :headers="headers"
-        :items="borrow"
+        :items="borrows"
         :search="search"
         :loading="loading"
         class="elevation-1"
@@ -36,7 +36,7 @@
                 "items-per-page-options" : [5,10,15,30,]
             },
             teacher:{},
-            borrow: [],
+            borrows: [],
             headers: [
             {
                 text: 'ID',
@@ -60,6 +60,7 @@
           initialize(){
               this.$admin.get('/teacher/show/'+this.$route.params.id).then(({data}) => {
                   this.teacher = data
+                  this.borrows = data.borrows
                 //   this.borrow = data
               })
           },
