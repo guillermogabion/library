@@ -1,93 +1,40 @@
 <template>
     <div>
-        <div class="d-flex justify-space-between m-2" style="gap:20px">
-        <v-alert
-            class="mx-auto"
-            border="left"
-            colored-border
-            color="#428C47"
-            elevation="2"
-        >
-           <v-list-item three-line>
-                    <v-list-item-content>
-                        <v-list-item-title class="text-center text-h5 mb-1">
-                            Total Books
-                        </v-list-item-title>
-                        <v-list-item-subtitle class="text-center text-h2">5000</v-list-item-subtitle>
-                    </v-list-item-content>
-                    <v-list-item-avatar
-                        tile
-                        size="80"
-                    >
-                        <v-icon
-                            x-large
-                            color="#428C47"
+        <div class="d-flex justify-space-between m-2" style="gap:20px" >
+            <v-col lg="12" cols="12">
+                <v-row>
+                    <v-col cols="4" v-for="(item,index) in activityLog" :key="index">
+                        <v-alert
+                            class="mx-auto"
+                            border="left"
+                            colored-border
+                            :color="item.color"
+                            elevation="2"
                         >
-                            mdi-book-multiple
-                        </v-icon>
-                    </v-list-item-avatar>
-                
-                </v-list-item>
-               
-        </v-alert>
-        <v-alert
-            class="mx-auto"
-            border="left"
-            colored-border
-            color="#BF8A49"
-            elevation="2"
-        >
-           <v-list-item three-line>
-                    <v-list-item-content>
-                        <v-list-item-title class="text-center text-h5 mb-1">
-                            Total borrowed Books
-                        </v-list-item-title>
-                        <v-list-item-subtitle class="text-center text-h2">50</v-list-item-subtitle>
-                    </v-list-item-content>
-                    <v-list-item-avatar
-                        tile
-                        size="80"
-                    >
-                        <v-icon
-                            x-large
-                            color="#BF8A49"
-                        >
-                            mdi-book-multiple
-                        </v-icon>
-                    </v-list-item-avatar>
-                
-                </v-list-item>
-                
-        </v-alert>
-        <v-alert
-            class="mx-auto"
-            border="left"
-            colored-border
-            color="#F2D750"
-            elevation="2"
-        >
-           <v-list-item three-line>
-                    <v-list-item-content>
-                        <v-list-item-title class="text-center text-h5 mb-1">
-                            Number of Users
-                        </v-list-item-title>
-                        <v-list-item-subtitle class="text-center text-h2">2350</v-list-item-subtitle>
-                    </v-list-item-content>
-                    <v-list-item-avatar
-                        tile
-                        size="80"
-                    >
-                        <v-icon
-                            x-large
-                            color="#F2D750"
-                        >
-                            mdi-account-multiple
-                        </v-icon>
-                    </v-list-item-avatar>
-                
-                </v-list-item>
-               
-        </v-alert>
+                            <v-list-item three-line>
+                                    <v-list-item-content>
+                                        <v-list-item-title class="text-center text-h5 mb-1">
+                                            {{item.title}}
+                                        </v-list-item-title>
+                                        <v-list-item-subtitle class="text-center text-h2">{{item.value}}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                    <v-list-item-avatar
+                                        tile
+                                        size="80"
+                                    >
+                                        <v-icon
+                                            x-large
+                                            :color="item.color"
+                                        >
+                                            {{item.icon}}
+                                        </v-icon>
+                                    </v-list-item-avatar>
+                                </v-list-item>                    
+                        </v-alert>
+                    </v-col>
+                </v-row>
+            </v-col>
+        
         </div>
         <div class="d-flex justify-space-between" style="gap:20px">
             <v-alert
@@ -107,6 +54,11 @@
                     :search="searchBorrowed"
                     :custom-filter="filterBorrowedBooksByName"
                     >
+                     <template v-slot:item.name ="{item}">
+
+                    {{item.borrowerable.first_name}} {{item.borrowerable.last_name}}
+                    
+                    </template>
                     <template v-slot:top>
                         <v-text-field
                         v-model="searchBorrowed"
@@ -134,6 +86,11 @@
                         :search="searchReturned"
                         :custom-filter="filterReturnedBooksByName"
                         >
+                         <template v-slot:item.name ="{item}">
+
+                        {{item.borrowerable.first_name}} {{item.borrowerable.last_name}}
+                        
+                        </template>
                         <template v-slot:top>
                             <v-text-field
                             v-model="searchReturned"
@@ -155,74 +112,16 @@ export default {
         searchBorrowed: '',
         searchReturned: '',
         // calories: '',
-        returnedBooks: [
-            {
-                bookTitle: 'book-1',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-2',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-3',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-4',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-5',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-5',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            }
-        ],
-        borrowedBooks: [
-             {
-                bookTitle: 'book-1',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-2',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-3',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-4',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-5',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            },
-            {
-                bookTitle: 'book-5',
-                borrower: 'Daniel Batican',
-                dateOfTransaction: '02/08/2022',
-            }
-        ],
+        returnedBooks: [],
+        borrowedBooks: [],
+         activityLog: [
+                    {title: 'Total Books', value: 0, icon: 'mdi-book-multiple', color: '#428C47'},
+                    {title: 'Total Borrowed Books', value: 0, icon: 'mdi-book-multiple', color: '#BF8A49'},
+                    {title: 'Total Users', value: 0, icon: 'mdi-account-multiple', color: '#F2D750'},
+                ],
 
     }),
     mounted() {
-        console.log(Date.now())
         this.initialize()
     },
     computed: {
@@ -251,46 +150,18 @@ export default {
       },
       returnedBooksHeaders () {
           return [
-            // {
-            //     text: 'ID',
-            //     align: 'start',
-            //     sortable: false,
-            //     value: 'name',
-            // },
-            // {
-            //     text: 'Calories',
-            //     value: 'calories',
-            //     filter: value => {
-            //     if (!this.calories) return true
-
-            //     return value < parseInt(this.calories)
-            //     },
-            // },
-                { text: 'Title of the Book', value: 'bookTitle' },
-                { text: 'Name of Borrower', value: 'borrower' },
-                { text: 'Date of Transaction', value: 'dateOfTransaction' },
+           
+                { text: 'Title of the Book', value: 'book.book_title' },
+                { text: 'Name of Borrower', value: 'name' },
+                { text: 'Date of Transaction', value: 'return_date' },
           ]
       },
       borrowedBooksHeaders () {
           return [
-            // {
-            //     text: 'ID',
-            //     align: 'start',
-            //     sortable: false,
-            //     value: 'name',
-            // },
-            // {
-            //     text: 'Calories',
-            //     value: 'calories',
-            //     filter: value => {
-            //     if (!this.calories) return true
 
-            //     return value < parseInt(this.calories)
-            //     },
-            // },
-                { text: 'Title of the Book', value: 'bookTitle' },
-                { text: 'Name of Borrower', value: 'borrower' },
-                { text: 'Date of Transaction', value: 'dateOfTransaction'},
+                { text: 'Title of the Book', value: 'book.book_title' },
+                { text: 'Name of Borrower', value: 'name' },
+                { text: 'Date of Transaction', value: 'date'},
           ]
       },
     },
@@ -308,8 +179,28 @@ export default {
           value.toString().indexOf(searchReturned) !== -1
       },
       initialize() {
-          console.log('naman');
+         this.$admin.get('borrow/index').then(({data}) => {
+              this.borrowedBooks = data
+              this.loading = false;
+
+            })
+
+             this.$admin.get('borrow/returned').then(({data}) => {
+              this.returnedBooks = data
+              this.loading = false;
+
+            })
+
+            this.$admin.get('dashboard/getData').then(({data})=> {
+                    this.activityLog[0].value= data.books
+                    this.activityLog[1].value= data.borroweds
+                    this.activityLog[2].value= data.users
+                    
+
+            })
       }
+
+
     },
 
 };

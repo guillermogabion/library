@@ -64,7 +64,7 @@ export default {
         show_pass: false,
         form: {
             email: 'admin@lang.com',
-            password: 123123,
+            password:123123,
         }
     }),
     methods : {

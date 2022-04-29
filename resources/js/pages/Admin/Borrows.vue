@@ -271,7 +271,15 @@ export default {
 
     borrowBook(){
       this.$admin.post('borrow/create',this.form).then(({data}) =>{
-        this.successNotify('Borrow');
+        if(data == 'Error1'){
+          this.errorNotify('User Already Borrowed Same Book');
+        }
+        else if(data == 'Error2'){
+          this.errorNotify('User Already Borrowed 3 Books');
+        }
+        else{
+          this.successNotify('Borrow');
+        }
         this.initialize()
       })
     }

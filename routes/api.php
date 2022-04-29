@@ -4,6 +4,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
@@ -67,6 +68,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('borrow/update/{id}',[BorrowController::class, 'update']);
 
 
+    Route::get('dashboard/getData',[DashboardController::class, 'getData']);
 
     // API route for logout user
     Route::post('/logout', [AuthController::class, 'logout']);

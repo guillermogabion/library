@@ -57,9 +57,9 @@
             },
             {text: 'Borrower Name', align: 'center', value: 'name'},
             {text: 'Book Name', align: 'center', value: 'book.book_title'},
-            {text: 'Book Name', align: 'center', value: 'book.book_title'},
             {text: 'Author', align: 'center', value: 'book.author'},
-            {text: 'Return Date', align: 'center', value: 'date'},
+            {text: 'Borrowed Date', align: 'center', value: 'date'},
+            {text: 'Return Date', align: 'center', value: 'return_date'},
             {text: 'Status', align: 'center', value: 'status'},
             ],
         }

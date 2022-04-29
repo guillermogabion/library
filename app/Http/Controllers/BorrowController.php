@@ -48,11 +48,11 @@ class BorrowController extends Controller
         $borrowCount = Borrow::where('borrowerable_id', $user->id)->where('hide', 'NO')->get();
 
         if($exists){
-            return "Already Borrowed Same Book";
+            return "Error1";
         }
         else{
             if(count($borrowCount) == 3){
-                return "Already Borrowed 3 Books";
+                return "Error2";
             }
             else{
 

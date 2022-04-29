@@ -32,7 +32,7 @@ export default {
         right : false,
         bottom : false,
         top : false,
-        timeout : 1000,
+        timeout : 3000,
         color: 'primary',
         text : 'This is a snackbar'
     }),

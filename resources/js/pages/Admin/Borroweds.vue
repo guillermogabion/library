@@ -57,7 +57,6 @@
             },
             {text: 'Borrower Name', align: 'center', value: 'name'},
             {text: 'Book Name', align: 'center', value: 'book.book_title'},
-            {text: 'Book Name', align: 'center', value: 'book.book_title'},
             {text: 'Author', align: 'center', value: 'book.author'},
             {text: 'Borrowed On', align: 'center', value: 'date'},
             {text: 'Action', align: 'center', value: 'action'},

@@ -27,6 +27,7 @@ class UserController extends Controller
             'name'=> $request->name,
             'email'=> $request->email,
             'password'=> bcrypt($request->password),
+            'isAdmin'=> true,
 
 
         ]);
@@ -55,6 +56,7 @@ class UserController extends Controller
         $adminUpdate = [
             'name'=> $request->name,
             'email'=> $request->email,
+            'isAdmin'=>$request->isAdmin,
         ];
 
         if($request->password){

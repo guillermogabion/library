@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'admin lang',
             'password' => bcrypt(123123),
-            'email' => 'admin@lang.com'
+            'email' => 'admin@lang.com',
+            'isAdmin' => true
         ]);
 
         Student::create([
@@ -33,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '213217',
             'email'=> 'cody@gmail.com',
             'course' => 'bscpe', 
-            'year' => '4', 
+            'year' => '4',
         ]);
 
         Teacher::create([
