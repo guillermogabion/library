@@ -16,7 +16,7 @@
                                     dark
                                     flat
                                 >
-                                    <v-toolbar-title>Library System</v-toolbar-title>
+                                    <v-toolbar-title>Admin Login</v-toolbar-title>
                                 
                                 </v-toolbar>
                                 <v-card-text>
