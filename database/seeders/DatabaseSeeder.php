@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '213217',
             'email'=> 'cody@gmail.com',
             'course' => 'bscpe', 
+            'password' => bcrypt(1234),
             'year' => '4',
         ]);
 

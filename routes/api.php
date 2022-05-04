@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::post('/userLogin', [AuthController::class, 'userLogin']);
+
 //Protecting Routes
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/profile', function(Request $request) {

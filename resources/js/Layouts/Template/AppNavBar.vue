@@ -81,6 +81,7 @@ export default {
         logoutAdmin(){
             this.$admin.post('/logout').then((response) => {
                 localStorage.removeItem("token")
+                localStorage.removeItem('user_type')
                 this.$router.push('/login')
             })
         },

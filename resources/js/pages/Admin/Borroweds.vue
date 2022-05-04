@@ -10,7 +10,7 @@
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Search Book Borrowed"
+          label="Search Book/s Borrowed"
           single-line
           hide-details
         ></v-text-field>

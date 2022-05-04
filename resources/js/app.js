@@ -28,6 +28,12 @@
  Vue.prototype.moment = moment
  
  
+ import Vue from "vue";
+ import VueQrcodeReader from "vue-qrcode-reader";
+ 
+ Vue.use(VueQrcodeReader);
+
+
  const app = new Vue({
      router,
      store,
