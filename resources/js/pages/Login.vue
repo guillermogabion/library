@@ -59,7 +59,7 @@
                                 </v-toolbar>
                                 <v-card-text>
                                     <v-form>
-                                     <qrcode-stream @decode="onDecode" @init="onInit" />
+                                     <qrcode-stream  @decode="onDecode" @init="onInit" />
                                      <p class="error">{{ error }}</p>
                                     </v-form>
                                 </v-card-text>
@@ -84,18 +84,27 @@ export default {
         students: [],
         teachers:[],
         show_pass: false,
+
         form: {
             email: 'admin@lang.com',
             password:123123,
         },
          error: '',
+         qrForm:{
+             value:''
+         }
+
     }),
     methods : {
-        onDecode(data){ 
-
-            axios.post('/api/userLogin',this.data).then((response) =>{
+        onDecode(data){
+            console.log("qr_value", data);
+            this.qrForm = {
+                value: data
+            }
+            
+            axios.post('/api/userLogin', this.qrForm).then((response) =>{
                 if(response.error){
-                    alert("Unkown User")
+                    alert("Unknown User")
                 }else{
                     localStorage.setItem('token',response.data.token)
                     localStorage.setItem('user_type','student')

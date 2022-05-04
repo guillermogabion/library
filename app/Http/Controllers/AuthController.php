@@ -31,28 +31,28 @@ class AuthController extends Controller
 
     public function userLogin(Request $request)
     {
-        
 
-        $studentExists = Student::where('qr_value', $request->data)->exists();
-        $teacherExists = Teacher::where('qr_value', $request->data)->exists();
+
+        $studentExists = Student::where('qr_value', $request->value)->exists();
+        $teacherExists = Teacher::where('qr_value', $request->value)->exists();
 
         if($studentExists){
-            $student = Student::where('qr_value',$request->data)->first();
+            $student = Student::where('qr_value',$request->value)->first();
             $success = $student;
             $success['token'] =  $student->createToken('MyApp')-> accessToken; 
 
-            return response()->json($success, 200);
+            return $success;
 
         }else if ($teacherExists){
-            $teacher = Teacher::where('qr_value', $request->data)->first();
+            $teacher = Teacher::where('qr_value', $request->value)->first();
             $success = $teacher;
             $success['token'] =  $teacher->createToken('MyApp')-> accessToken; 
 
-            return response()->json($success, 200);
+            return $success;
 
         }else{
 
-            return response()->json(['error' => ['Username and Password are Wrong.']], 200);
+            return ['error'=> 'Unknown User!'];
 
         }
 
@@ -66,7 +66,6 @@ class AuthController extends Controller
 
     public function studentLogout(Request $request)
     {
-        auth()->guard('student')->logout();
 
         $request->user()->token()->revoke();
 

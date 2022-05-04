@@ -20,7 +20,7 @@ class Student extends Model
         'email',
         'course', 
         'year', 
-        'qr_value'
+        'qr_value',
     ];
 
     public function borrows()
