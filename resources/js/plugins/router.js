@@ -125,7 +125,7 @@ router.beforeEach(async(to, from, next) => {
         console.log('not require auth but there is user')
         if (localStorage.getItem("user_type") == "admin") {
             console.log("admin")
-            next("/admin/dashboard")
+            next("/dashboard")
         } else {
             console.log("student")
             next("/student/dashboard")
@@ -134,10 +134,15 @@ router.beforeEach(async(to, from, next) => {
         console.log('require auth there is no user')
         next('/login');
     } else if (user_type && user_type != localStorage.getItem("user_type")) {
-        next(`/${localStorage.getItem("user_type")}/dashboard`)
-        // console.log(user_type,localStorage.getItem("user_type"))
-
+        if (localStorage.getItem("user_type") == "admin") {
+            console.log("admin")
+            next("/dashboard")
+        } else {
+            console.log("student")
+            next("/student/dashboard")
+        }
     } else {
+        
         console.log('next')
         next();
     }
