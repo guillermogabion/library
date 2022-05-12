@@ -19,6 +19,7 @@ class CreateStudentsTable extends Migration
             $table->string('last_name');
             $table->string('course');
             $table->string('year');
+            $table->string('password')->nullable();
             $table->string('qr_value')->nullable();
             $table->string('phone_number');
             $table->string('email')->unique();

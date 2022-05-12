@@ -44,14 +44,23 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
         'student' => [
             'driver' => 'session',
             'provider' => 'students',
         ],
-        'student-api' => [
-            'driver' => 'passport',
-            'provider' => 'students',
+        'teacher' => [
+            'driver' => 'session',
+            'provider' => 'teachers',
         ],
+        'visitor' => [
+            'driver' => 'session',
+            'provider' => 'visitors',
+        ],
+       
         
     ],
 
@@ -80,8 +89,19 @@ return [
 
         'students' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Student::class,
+            'model' =>  App\Models\Student::class,
         ],
+
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' =>  App\Models\Teacher::class,
+        ],
+
+        'visitors' => [
+            'driver' => 'eloquent',
+            'model' =>  App\Models\Visitor::class,
+        ]
+
 
         // 'users' => [
         //     'driver' => 'database',

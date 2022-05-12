@@ -52,6 +52,7 @@ export default {
             { title: 'Admin', icon: 'mdi-account-group', route: '/admins' },
             { title: 'Student', icon: 'mdi-account-group', route: '/students' },
             { title: 'Teacher', icon: 'mdi-account-group', route: '/teachers' },
+            { title: 'Visitor', icon: 'mdi-account-group', route: '/visitors' },
             { title: 'Borrow', icon: 'mdi-book-plus', route: '/borrows' },
             { title: 'Borrowed Books', icon: 'mdi-book-multiple', route: '/borrowed' },
             { title: 'Returned Books', icon: 'mdi-book-multiple', route: '/return' },

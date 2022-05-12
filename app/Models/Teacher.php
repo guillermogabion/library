@@ -16,7 +16,8 @@ class Teacher extends Model
         'last_name',
         'phone_number',
         'email',
-        'qr_value'
+        'qr_value',
+        'password'
 
     ];
 
@@ -26,6 +27,6 @@ class Teacher extends Model
     }
 
     protected $hidden = [
-        'remember_token',
+        'remember_token','password'
     ];
 }

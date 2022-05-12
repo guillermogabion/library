@@ -13,7 +13,14 @@
         class="at-logo" >
       </v-avatar>
       
-      <v-toolbar-title>Tan Ting Bing Memorial Colleges Foundation Inc. Library System</v-toolbar-title>
+      <v-btn
+          v-for="(link, i) in links"
+          :key="i"
+          text
+          @click="$router.push(link.link)"
+        >
+          {{ link.text }}
+        </v-btn>
       <v-spacer></v-spacer>
       <v-btn small @click="logoutUser">
         <v-icon >
@@ -41,7 +48,8 @@
   export default {
     data: () => ({
       links: [
-        { text : 'Books',link : '/books'},
+        { text : 'Books',link : 'dashboard'},
+        { text : 'Borrowed Book/s',link : 'borroweds'},
       
         // { text : 'Enrolled Subjects',link : '/enrolled_subjects'},
       ],

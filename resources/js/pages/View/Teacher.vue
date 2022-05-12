@@ -5,7 +5,7 @@
         outlined
     >
       <v-card-title class="text-h5 font-weight-bold">
-       {{teacher.first_name}} Book/s Borrowed
+        Book/s Borrowed
       </v-card-title>
       <v-card-title>
       </v-card-title>
@@ -17,6 +17,12 @@
         :loading="loading"
         class="elevation-1"
       >
+         <template v-slot:item.title ="{item}">
+
+          {{item.book.book_title}}
+        
+        </template>
+
       </v-data-table>
        <v-spacer></v-spacer>
             <div class="d-flex justify-end mt-5 mb-5 mr-5">
@@ -44,11 +50,8 @@
                 sortable: false,
                 value: 'id',
             },
-            {text: 'Book Name', align: 'center', value: 'slot_id'},
-            {text: 'Author', align: 'center', value: 'date'},
-            {text: 'Borrowed On', align: 'center', value: 'start_time'},
-            {text: 'Return Date', align: 'center', value: 'end_time'},
-            {text: 'Status', align: 'center', value: 'status'},
+            {text: 'Book Title', align: 'center', value: 'title'},
+            {text: 'Borrowed On', align: 'center', value: 'date'},
             ],
         }
       },
@@ -59,8 +62,7 @@
       methods : { 
           initialize(){
               this.$admin.get('/teacher/show/'+this.$route.params.id).then(({data}) => {
-                  this.teacher = data
-                  this.borrows = data.borrows
+                  this.borrows = data
                 //   this.borrow = data
               })
           },

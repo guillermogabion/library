@@ -155,6 +155,7 @@ export default {
         users: [],
         student:[],
         teacher:[],
+        visitor:[],
 
         form: {
               id:null,
@@ -205,33 +206,43 @@ export default {
       this.$admin.get('student/index').then(({data})=> {
           this.student = data
 
-          this.users = data.map((student) => {
+          this.users = data.map((Student) => {
             return {
-              ...student,
-              type : 'student'
+              ...Student,
+              type : 'Student'
             }
           })
           var vm = this
 
           this.$admin.get('teacher/index').then(({data})=> {
-            vm.teacher = data.map((teacher)=> {
+            vm.teacher = data.map((Teacher)=> {
 
               return {
-                ...teacher,
-                type: 'teacher'
+                ...Teacher,
+                type: 'Teacher'
               }
             })
 
             vm.users.push.apply(vm.users, vm.teacher)
+
+          })
+
+          this.$admin.get('visitor/index').then(({data})=> {
+            vm.visitor = data.map((Visitor)=> {
+
+              return {
+                ...Visitor,
+                type: 'Visitor'
+              }
+            })
+
+            vm.users.push.apply(vm.users,vm.visitor)
           
           })
 
           
       })
-      this.$admin.get('teacher/index').then(({data})=> {
-          this.teacher = data
-          
-      })
+      
 
     },
 
@@ -276,6 +287,9 @@ export default {
         }
         else if(data == 'Error2'){
           this.errorNotify('User Already Borrowed 3 Books');
+        }
+        else if(data == 'Error3'){
+          this.errorNotify('Book Is Not Availlable');
         }
         else{
           this.successNotify('Borrow');

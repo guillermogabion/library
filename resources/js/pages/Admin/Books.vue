@@ -80,7 +80,6 @@
           { text: "Author", value: "author", align: 'center' },
           { text: "Available Books", value: "available" , align: 'center'},
           { text: "Total Books", value: "total", align: 'center' },
-          { text: "Status", value: "status", align: 'center'},
           { text: "Actions", value: "actions", sortable: false,align: 'center' },
         ],
         addition_edition_dailog: false,

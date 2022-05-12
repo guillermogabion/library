@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Borrow;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -39,7 +40,8 @@ class TeacherController extends Controller
     
     public function show($id)
     {
-        $teacher = Teacher::with('borrows')->find($id);
+        $teacher = Borrow::with('book')->where('borrowerable_type', 'App\Models\Teacher')->where('borrowerable_id', $id)
+                ->where('hide', 'NO')->get();
 
         return $teacher;
     }
@@ -74,9 +76,9 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::findOrFail($id);
         $qrcode = QrCode::size(200)
-                ->generate($teacher->last_name.'_'.$teacher->email);
+                ->generate($teacher->last_name.'(teacher)'.'_'.$teacher->email);
 
-        $img_value = $teacher->last_name.'_'.$teacher->email;
+        $img_value = $teacher->last_name.'(teacher)'.'_'.$teacher->email;
 
         Teacher::where('id', $id)->update([
             'qr_value' => $img_value    

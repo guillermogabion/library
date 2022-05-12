@@ -5,7 +5,7 @@
         outlined
     >
       <v-card-title class="text-h5 font-weight-bold">
-       {{student.first_name}} Book/s Borrowed
+        Book/s Borrowed
       </v-card-title>
       <v-card-title>
       </v-card-title>
@@ -16,6 +16,12 @@
         :loading="loading"
         class="elevation-1"
       >
+        <template v-slot:item.title ="{item}">
+
+          {{item.book.book_title}}
+        
+        </template>
+
       </v-data-table>
        <v-spacer></v-spacer>
             <div class="d-flex justify-end mt-5 mb-5 mr-5">
@@ -34,7 +40,6 @@
             footerProps :{
                 "items-per-page-options" : [5,10,15,30,]
             },
-            student:{},
             borrows: [],
             loading: true,
             headers: [
@@ -44,7 +49,7 @@
                 sortable: false,
                 value: 'id',
             },
-            {text: 'Book ID', align: 'center', value: 'book_id'},
+            {text: 'Book Title', align: 'center', value: 'title'},
             {text: 'Borrowed On', align: 'center', value: 'date'},
             ],
         }
@@ -56,8 +61,7 @@
       methods : { 
           initialize(){
               this.$admin.get('/student/show/'+this.$route.params.id).then(({data}) => {
-                  this.student = data
-                  this.borrows = data.borrows
+                  this.borrows = data
                   this.loading = false;
 
                 //   this.borrow = data

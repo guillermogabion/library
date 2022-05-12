@@ -91,7 +91,7 @@ export default {
         },
          error: '',
          qrForm:{
-             value:''
+             value:'',
          }
 
     }),
@@ -99,7 +99,8 @@ export default {
         onDecode(data){
             console.log("qr_value", data);
             this.qrForm = {
-                value: data
+                value: data,
+              
             }
             
             axios.post('/api/userLogin', this.qrForm).then((response) =>{

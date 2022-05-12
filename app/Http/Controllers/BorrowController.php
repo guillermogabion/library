@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Borrow;
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -37,24 +38,46 @@ class BorrowController extends Controller
 
         $date = Carbon::now()->toDateString();
 
-        if($request->user_type == 'teacher'){
+        if($request->user_type == 'Teacher'){
             $user = Teacher::find($request->user_id);
+            $exists = Borrow::where('borrowerable_type', 'App\Models\Teacher')
+                    ->where('borrowerable_id', $user->id)->where('book_id', $request->id)
+                    ->where('hide', 'NO')->exists();
+            $borrowCount = Borrow::where('borrowerable_type', 'App\Models\Teacher')->where('borrowerable_id', $user->id)
+                    ->where('hide', 'NO')->get();
+            
+
         }
-        elseif($request->user_type == 'student'){
+        elseif($request->user_type == 'Student'){
             $user = Student::find($request->user_id);
+            $exists = Borrow::where('borrowerable_type', 'App\Models\Student')
+                    ->where('borrowerable_id', $user->id)->where('book_id', $request->id)
+                    ->where('hide', 'NO')->exists();
+            $borrowCount = Borrow::where('borrowerable_type', 'App\Models\Student')->where('borrowerable_id', $user->id)
+                    ->where('hide', 'NO')->get();
+        }
+        elseif($request->user_type == 'Visitor'){
+            $user = Visitor::find($request->user_id);
+            $exists = Borrow::where('borrowerable_type', 'App\Models\Visitor')
+                    ->where('borrowerable_id', $user->id)->where('book_id', $request->id)
+                    ->where('hide', 'NO')->exists();
+            $borrowCount = Borrow::where('borrowerable_type', 'App\Models\Visitor')->where('borrowerable_id', $user->id)
+                    ->where('hide', 'NO')->get();
         }
 
-        $exists = Borrow::where('borrowerable_id', $user->id)->where('book_id', $request->id)->where('hide', 'NO')->exists();
-        $borrowCount = Borrow::where('borrowerable_id', $user->id)->where('hide', 'NO')->get();
+        $notAvaillable = Book::where('id', $request->id)->where('available', '0')->exists();
 
         if($exists){
             return "Error1";
+        }
+        elseif($notAvaillable){
+            return "Error3";
         }
         else{
             if(count($borrowCount) == 3){
                 return "Error2";
             }
-            else{
+             else{
 
                 $user->borrows()->create([
                     'book_id' => $request->id,

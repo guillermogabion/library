@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
 
 
 class Student extends Model
@@ -21,6 +23,7 @@ class Student extends Model
         'course', 
         'year', 
         'qr_value',
+        'password',
     ];
 
     public function borrows()
@@ -29,7 +32,7 @@ class Student extends Model
     }
 
     protected $hidden = [
-        'remember_token',
+        'remember_token','password'
     ];
    
 }

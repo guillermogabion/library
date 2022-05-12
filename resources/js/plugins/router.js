@@ -8,14 +8,17 @@ import Dashboard from '../pages/Admin/Dashboard.vue';
 import Books from '../pages/Admin/Books.vue';
 import Admins from '../pages/Admin/Admins.vue';
 import Students from '../pages/Admin/Students.vue';
+import Visitors from '../pages/Admin/Visitors.vue';
 import Teachers from '../pages/Admin/Teachers.vue';
 import Borrows from '../pages/Admin/Borrows.vue';
 import studentView from '../pages/View/Student.vue';
 import teacherView from '../pages/View/Teacher.vue';
+import visitorView from '../pages/View/Visitor.vue';
 import Borrowed from '../pages/Admin/Borroweds.vue';
 import Return from '../pages/Admin/Returned.vue';
 
 import UserDashboard from '../pages/User/Dashboard.vue';
+import UserBorroweds from '../pages/User/Borrows.vue'
 
 Vue.use(VueRouter);
 
@@ -57,6 +60,11 @@ const router = new VueRouter({
                     component: Teachers,
                 },
                 {
+                    path: '/visitors',
+                    name: 'visitors',
+                    component: Visitors,
+                },
+                {
                     path: '/borrows',
                     name: 'borrows',
                     component: Borrows,
@@ -70,6 +78,11 @@ const router = new VueRouter({
                     path: '/teacher-view/:id',
                     name: 'teacher-view',
                     component: teacherView,
+                },
+                {
+                    path: '/visitor-view/:id',
+                    name: 'visitor-view',
+                    component: visitorView,
                 },
                 {
                     path: '/borrowed',
@@ -97,6 +110,11 @@ const router = new VueRouter({
                     path: 'dashboard',
                     name: 'dashboard',
                     component: UserDashboard,
+                },
+                {
+                    path: 'borroweds',
+                    name: 'borroweds',
+                    component: UserBorroweds,
                 },
               
             ]

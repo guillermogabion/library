@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisitorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,14 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('teacher/generate/{id}',[TeacherController::class, 'generate']);
     Route::delete('teacher/delete/{teacher}',[TeacherController::class, 'destroy']);    
 
+    
+    Route::get('visitor/index',[VisitorController::class, 'index']);
+    Route::post('visitor/create',[VisitorController::class, 'store']);
+    Route::get('visitor/show/{id}',[VisitorController::class, 'show']);
+    Route::post('visitor/update/{id}',[VisitorController::class, 'update']);
+    Route::get('visitor/generate/{id}',[VisitorController::class, 'generate']);
+    Route::delete('visitor/delete/{visitor}',[VisitorController::class, 'destroy']); 
+
 
     Route::get('book/index',[BookController::class, 'index']);
     Route::post('book/create',[BookController::class, 'store']);
@@ -71,6 +80,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 
 
     Route::get('dashboard/getData',[DashboardController::class, 'getData']);
+    Route::get('/getBorrowed', [AuthController::class, 'getBorrowed']);
+
 
     // API route for logout user
     Route::post('/logout', [AuthController::class, 'logout']);

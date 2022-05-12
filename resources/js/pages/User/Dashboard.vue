@@ -58,7 +58,6 @@
           { text: "Author", value: "author", align: 'center' },
           { text: "Available Books", value: "available" , align: 'center'},
           { text: "Total Books", value: "total", align: 'center' },
-          { text: "Status", value: "status", align: 'center'},
         ],
         addition_edition_dailog: false,
         
@@ -82,6 +81,11 @@
             //Then injecting the result to datatable parameters.
             this.loading = false;
             this.books = data;
+            console.log(data);
+          });
+          this.$admin.get('getBorrowed').then(({data}) => {
+            //Then injecting the result to datatable parameters.
+
             console.log(data);
           });
     },
