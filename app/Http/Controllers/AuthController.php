@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Borrow;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use App\Models\User;
+use App\Models\Visitor;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -35,6 +38,7 @@ class AuthController extends Controller
 
         $studentExists = Student::where('qr_value', $request->value)->exists();
         $teacherExists = Teacher::where('qr_value', $request->value)->exists();
+        $visitorExists = Visitor::where('qr_value', $request->value)->exists();
 
         if($studentExists){
             $student = Student::where('qr_value',$request->value)->first();
@@ -50,6 +54,13 @@ class AuthController extends Controller
 
             return $success;
 
+        }else if ($visitorExists){
+            $visitor = Visitor::where('qr_value', $request->value)->first();
+            $success = $visitor;
+            $success['token'] =  $visitor->createToken('MyApp')-> accessToken; 
+
+            return $success;
+
         }else{
 
             return ['error'=> 'Unknown User!'];
@@ -59,13 +70,18 @@ class AuthController extends Controller
         
     }
 
-    public function details(Request $request)
+    public function getBorrowed(Request $request)
     {
-        return response()->json($request->user(), 200);
+        if(Auth::check()){
+            $user = $request->user();
+        }
+      
+        return $user;
     }
 
     public function studentLogout(Request $request)
     {
+        auth()->guard('student')->logout();
 
         $request->user()->token()->revoke();
 
@@ -74,7 +90,11 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+
+        auth()->guard('user')->logout();
+
         $request->user()->token()->revoke();
+
 
         return "success";
     }

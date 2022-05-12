@@ -84,23 +84,23 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\User::class, App\Models\Student::class,App\Models\Teacher::class,App\Models\Visitor::class,
         ],
 
-        'students' => [
-            'driver' => 'eloquent',
-            'model' =>  App\Models\Student::class,
-        ],
+        // 'students' => [
+        //     'driver' => 'eloquent',
+        //     'model' =>  App\Models\Student::class,
+        // ],
 
-        'teachers' => [
-            'driver' => 'eloquent',
-            'model' =>  App\Models\Teacher::class,
-        ],
+        // 'teachers' => [
+        //     'driver' => 'eloquent',
+        //     'model' =>  App\Models\Teacher::class,
+        // ],
 
-        'visitors' => [
-            'driver' => 'eloquent',
-            'model' =>  App\Models\Visitor::class,
-        ]
+        // 'visitors' => [
+        //     'driver' => 'eloquent',
+        //     'model' =>  App\Models\Visitor::class,
+        // ]
 
 
         // 'users' => [
