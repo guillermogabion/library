@@ -141,7 +141,7 @@
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
-        this.$admin.get('visitor/index').then((data) => {
+        this.$admin.get('api/visitor/index').then((data) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
             this.visitors = data.data;
@@ -179,14 +179,14 @@
     saveVisitor(){
       console.log(this.visitorForm)
       if(this.visitorForm.id){
-        this.$admin.post('visitor/update/'+this.visitorForm.id,this.visitorForm).then(({data}) => {
+        this.$admin.post('api/visitor/update/'+this.visitorForm.id,this.visitorForm).then(({data}) => {
           console.log(data);
           this.successNotify('Update');
           this.initialize()
         })
       }
       else{
-        this.$admin.post('visitor/create',this.visitorForm).then(({data}) =>{
+        this.$admin.post('api/visitor/create',this.visitorForm).then(({data}) =>{
           this.successNotify('Created');
           this.initialize()
         })
@@ -194,13 +194,13 @@
     },
 
     generate(visitor){
-      this.$admin.get('visitor/generate/'+ visitor.id).then(({data}) => {
+      this.$admin.get('api/visitor/generate/'+ visitor.id).then(({data}) => {
         this.qr_code =  data
       })
     },
 
     deleteVisitor(visitor){
-      this.$admin.delete('visitor/delete/'+ visitor.id).then(({data}) => {
+      this.$admin.delete('api/visitor/delete/'+ visitor.id).then(({data}) => {
          this.successNotify('Deleted');
         this.initialize() 
       })

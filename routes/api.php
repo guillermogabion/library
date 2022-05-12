@@ -27,9 +27,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/userLogin', [AuthController::class, 'userLogin']);
+Route::get('book/index',[BookController::class, 'index']);
 
 //Protecting Routes
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' => ['auth:user-api','scopes:user'] ], function () {
     Route::get('/profile', function(Request $request) {
         return Auth::user();
     });
@@ -65,7 +66,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::delete('visitor/delete/{visitor}',[VisitorController::class, 'destroy']); 
 
 
-    Route::get('book/index',[BookController::class, 'index']);
     Route::post('book/create',[BookController::class, 'store']);
     Route::get('book/show/{id}',[BookController::class, 'show']);
     Route::post('book/update/{id}',[BookController::class, 'update']);
@@ -80,7 +80,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
 
     Route::get('dashboard/getData',[DashboardController::class, 'getData']);
-    Route::get('/getBorrowed', [AuthController::class, 'getBorrowed']);
+    // Route::get('/getBorrowed', [AuthController::class, 'getBorrowed']);
 
 
     // API route for logout user

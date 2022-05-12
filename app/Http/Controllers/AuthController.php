@@ -20,7 +20,7 @@ class AuthController extends Controller
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+            $success['token'] =  $user->createToken('MyApp',['user'])->accessToken; 
             $success['name'] =  $user->name;
             $success['id'] =  $user->id;
    
@@ -43,21 +43,33 @@ class AuthController extends Controller
         if($studentExists){
             $student = Student::where('qr_value',$request->value)->first();
             $success = $student;
-            $success['token'] =  $student->createToken('MyApp')-> accessToken; 
+            $tokenResult = $student->createToken('MyApp',['student']);
+            $token = $tokenResult->token;
+            $token->save();
+            $success['user_type'] =  'student';
+            $success['token'] =  $tokenResult->accessToken;
 
             return $success;
 
         }else if ($teacherExists){
             $teacher = Teacher::where('qr_value', $request->value)->first();
             $success = $teacher;
-            $success['token'] =  $teacher->createToken('MyApp')-> accessToken; 
+            $tokenResult = $teacher->createToken('MyApp',['teacher']);
+            $token = $tokenResult->token;
+            $token->save();
+            $success['user_type'] =  'teacher';
+            $success['token'] =  $tokenResult->accessToken; 
 
             return $success;
 
         }else if ($visitorExists){
             $visitor = Visitor::where('qr_value', $request->value)->first();
             $success = $visitor;
-            $success['token'] =  $visitor->createToken('MyApp')-> accessToken; 
+            $tokenResult = $visitor->createToken('MyApp',['visitor']);
+            $token = $tokenResult->token;
+            $token->save();
+            $success['user_type'] =  'visitor';
+            $success['token'] =  $tokenResult->accessToken; 
 
             return $success;
 
@@ -72,9 +84,7 @@ class AuthController extends Controller
 
     public function getBorrowed(Request $request)
     {
-        if(Auth::check()){
-            $user = $request->user();
-        }
+        $user = $request->user();
       
         return $user;
     }
@@ -82,6 +92,24 @@ class AuthController extends Controller
     public function studentLogout(Request $request)
     {
         auth()->guard('student')->logout();
+
+        $request->user()->token()->revoke();
+
+        return "success";
+    }
+
+    public function visitorLogout(Request $request)
+    {
+        auth()->guard('visitor')->logout();
+
+        $request->user()->token()->revoke();
+
+        return "success";
+    }
+
+    public function teacherLogout(Request $request)
+    {
+        auth()->guard('teacher')->logout();
 
         $request->user()->token()->revoke();
 

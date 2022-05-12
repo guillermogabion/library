@@ -14,11 +14,11 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::post('/login',[AuthController::class, 'studentLogin'])->name('studentLogin');
-Route::group( ['prefix' => 'v1','middleware' => ['auth:student-api','scopes:student'] ],function(){
+Route::group( ['middleware' => ['auth:student-api','scopes:student'] ],function(){
    // authenticated staff routes here 
     Route::get('/details',[AuthController::class, 'details']);
+    Route::get('/getBorrowed', [AuthController::class, 'getBorrowed']);
 
-    Route::post('/user/logout', [AuthController::class, 'studentLogout']);
+    Route::post('/logout', [AuthController::class, 'studentLogout']);
 
 });

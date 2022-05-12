@@ -80,11 +80,11 @@ export default {
     },
     methods : {
         logoutAdmin(){
-            this.$admin.post('/logout').then((response) => {
-                localStorage.removeItem("token")
-                localStorage.removeItem('user_type')
-                this.$router.push('/login')
-            })
+                this.$admin.post('api/logout').then((response) => {
+                    localStorage.removeItem("token")
+                    localStorage.removeItem('user_type')
+                    this.$router.push('/login')
+                })
         },
         checkIfActive(route){
             let route_text = route.split("/")

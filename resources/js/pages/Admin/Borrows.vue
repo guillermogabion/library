@@ -199,11 +199,11 @@ export default {
               email:''
       }
       
-      this.$admin.get('book/index').then(({data})=> {
+      this.$admin.get('api/book/index').then(({data})=> {
           this.items = data
           
       })
-      this.$admin.get('student/index').then(({data})=> {
+      this.$admin.get('api/student/index').then(({data})=> {
           this.student = data
 
           this.users = data.map((Student) => {
@@ -214,7 +214,7 @@ export default {
           })
           var vm = this
 
-          this.$admin.get('teacher/index').then(({data})=> {
+          this.$admin.get('api/teacher/index').then(({data})=> {
             vm.teacher = data.map((Teacher)=> {
 
               return {
@@ -227,7 +227,7 @@ export default {
 
           })
 
-          this.$admin.get('visitor/index').then(({data})=> {
+          this.$admin.get('api/visitor/index').then(({data})=> {
             vm.visitor = data.map((Visitor)=> {
 
               return {
@@ -281,7 +281,7 @@ export default {
     },
 
     borrowBook(){
-      this.$admin.post('borrow/create',this.form).then(({data}) =>{
+      this.$admin.post('api/borrow/create',this.form).then(({data}) =>{
         if(data == 'Error1'){
           this.errorNotify('User Already Borrowed Same Book');
         }

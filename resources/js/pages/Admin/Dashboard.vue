@@ -179,19 +179,19 @@ export default {
           value.toString().indexOf(searchReturned) !== -1
       },
       initialize() {
-         this.$admin.get('borrow/index').then(({data}) => {
+         this.$admin.get('api/borrow/index').then(({data}) => {
               this.borrowedBooks = data
               this.loading = false;
 
             })
 
-             this.$admin.get('borrow/returned').then(({data}) => {
+             this.$admin.get('api/borrow/returned').then(({data}) => {
               this.returnedBooks = data
               this.loading = false;
 
             })
 
-            this.$admin.get('dashboard/getData').then(({data})=> {
+            this.$admin.get('api/dashboard/getData').then(({data})=> {
                     this.activityLog[0].value= data.books
                     this.activityLog[1].value= data.borroweds
                     this.activityLog[2].value= data.users

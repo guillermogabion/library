@@ -94,7 +94,7 @@
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
-        this.$admin.get('admin/index').then(({data}) => {
+        this.$admin.get('api/admin/index').then(({data}) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
             this.admins = data;
@@ -123,13 +123,13 @@
       // console.log(this.adminForm)
       // return;
       if(this.adminForm.id){
-        this.$admin.post('admin/update/'+this.adminForm.id,this.adminForm).then(({data}) => {
+        this.$admin.post('api/admin/update/'+this.adminForm.id,this.adminForm).then(({data}) => {
           this.successNotify('update');
           this.initialize()
         })
       }
       else{
-        this.$admin.post('admin/create',this.adminForm).then(({data}) =>{
+        this.$admin.post('api/admin/create',this.adminForm).then(({data}) =>{
           console.log(data)
           this.successNotify('created');
           this.initialize()
@@ -137,7 +137,7 @@
       }
     },
     deleteAdmin(admin){
-      this.$admin.delete('admin/delete/'+ admin.id).then(({data}) => {
+      this.$admin.delete('api/admin/delete/'+ admin.id).then(({data}) => {
         this.initialize() 
       })
     }

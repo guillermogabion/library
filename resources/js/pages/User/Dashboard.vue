@@ -77,13 +77,13 @@
     initialize() {
         
         this.loading = true;
-        this.$admin.get('book/index').then(({data}) => {
+        this.$admin.get('api/book/index').then(({data}) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
             this.books = data;
             console.log(data);
           });
-          this.$admin.get('getBorrowed').then(({data}) => {
+          this.$admin.get(`${localStorage.getItem('user_type')}/getBorrowed`).then(({data}) => {
             //Then injecting the result to datatable parameters.
 
             console.log(data);

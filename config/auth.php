@@ -48,16 +48,32 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'user-api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
         'student' => [
             'driver' => 'session',
+            'provider' => 'students',
+        ],
+        'student-api' => [
+            'driver' => 'passport',
             'provider' => 'students',
         ],
         'teacher' => [
             'driver' => 'session',
             'provider' => 'teachers',
         ],
+        'teacher-api' => [
+            'driver' => 'passport',
+            'provider' => 'teachers',
+        ],
         'visitor' => [
             'driver' => 'session',
+            'provider' => 'visitors',
+        ],
+        'visitor-api' => [
+            'driver' => 'passport',
             'provider' => 'visitors',
         ],
        
@@ -84,23 +100,23 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class, App\Models\Student::class,App\Models\Teacher::class,App\Models\Visitor::class,
+            'model' => App\Models\User::class,
         ],
 
-        // 'students' => [
-        //     'driver' => 'eloquent',
-        //     'model' =>  App\Models\Student::class,
-        // ],
+        'students' => [
+            'driver' => 'eloquent',
+            'model' =>  App\Models\Student::class,
+        ],
 
-        // 'teachers' => [
-        //     'driver' => 'eloquent',
-        //     'model' =>  App\Models\Teacher::class,
-        // ],
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' =>  App\Models\Teacher::class,
+        ],
 
-        // 'visitors' => [
-        //     'driver' => 'eloquent',
-        //     'model' =>  App\Models\Visitor::class,
-        // ]
+        'visitors' => [
+            'driver' => 'eloquent',
+            'model' =>  App\Models\Visitor::class,
+        ]
 
 
         // 'users' => [

@@ -69,7 +69,7 @@
       },
       methods : { 
         initialize(){
-            this.$admin.get('borrow/index').then(({data}) => {
+            this.$admin.get('api/borrow/index').then(({data}) => {
               this.borrows = data
               this.loading = false;
 
@@ -77,7 +77,7 @@
         },
 
         returnBook(item){
-          this.$admin.post('borrow/update/'+ item.id, item).then(({data}) => {
+          this.$admin.post('api/borrow/update/'+ item.id, item).then(({data}) => {
             console.log(item);
             this.successNotify('Return');
             this.initialize() 

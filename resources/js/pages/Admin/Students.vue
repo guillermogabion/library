@@ -150,7 +150,7 @@
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
-        this.$admin.get('student/index')
+        this.$admin.get('api/student/index')
           .then((data) => {
             // console.log(data);
             //Then injecting the result to datatable parameters.
@@ -191,7 +191,7 @@
     saveStudent(){
       if(this.studentForm.id){
         console.log(this.studentForm);
-        this.$admin.post('student/update/'+this.studentForm.id,this.studentForm).then(({data}) => {
+        this.$admin.post('api/student/update/'+this.studentForm.id,this.studentForm).then(({data}) => {
           this.successNotify('Update');
           console.log(data);
           this.initialize()
@@ -200,7 +200,7 @@
       else{
           // console.log(this.studentForm);
           // return;
-        this.$admin.post('student/create',this.studentForm).then(({data}) =>{
+        this.$admin.post('api/student/create',this.studentForm).then(({data}) =>{
           this.successNotify('Created');
           this.initialize()
         })
@@ -208,13 +208,13 @@
     },
 
     generate(student){
-      this.$admin.get('student/generate/'+ student.id).then(({data}) => {
+      this.$admin.get('api/student/generate/'+ student.id).then(({data}) => {
         this.qr_code =  data
       })
     },
 
     deleteStudent(student){
-      this.$admin.delete('student/delete/'+ student.id).then(({data}) => {
+      this.$admin.delete('api/student/delete/'+ student.id).then(({data}) => {
          this.successNotify('Deleted');
         this.initialize() 
       })

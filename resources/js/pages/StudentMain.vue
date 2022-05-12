@@ -56,7 +56,7 @@
     }),
     methods : {
         logoutUser(){
-            this.$admin.post('/logout').then((response) => {
+            this.$admin.post(`/${localStorage.getItem('user_type')}/logout`).then((response) => {
                 localStorage.removeItem("token")
                 localStorage.removeItem('user_type')
                 this.$router.push('/login')

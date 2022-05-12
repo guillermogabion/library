@@ -32,7 +32,7 @@ const router = new VueRouter({
             component: Main,
             meta: {
                 requiresAuth: true,
-                user_type : 'admin',
+                user_type : ['admin'],
             },
             children: [{
                     path: '/dashboard',
@@ -102,7 +102,7 @@ const router = new VueRouter({
             component: StudentMain,
             meta: {
                 requiresAuth: true,
-                user_type : 'student',
+                user_type : ['student','teacher','visitor'],
             },
             children: [
                
@@ -151,11 +151,11 @@ router.beforeEach(async(to, from, next) => {
     } else if (requiresAuth && !user) {
         console.log('require auth there is no user')
         next('/login');
-    } else if (user_type && user_type != localStorage.getItem("user_type")) {
+    } else if (user_type && !user_type.includes(localStorage.getItem("user_type"))) {
         if (localStorage.getItem("user_type") == "admin") {
             console.log("admin")
             next("/dashboard")
-        } else {
+        } else if(localStorage.getItem("user_type") == "teacher" || localStorage.getItem("user_type") == "student" || localStorage.getItem("user_type") == "visitor") {
             console.log("student")
             next("/student/dashboard")
         }

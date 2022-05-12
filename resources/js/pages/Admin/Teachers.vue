@@ -141,7 +141,7 @@
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
-        this.$admin.get('teacher/index').then((data) => {
+        this.$admin.get('api/teacher/index').then((data) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
             this.teachers = data.data;
@@ -180,14 +180,14 @@
     saveTeacher(){
       console.log(this.teacherForm)
       if(this.teacherForm.id){
-        this.$admin.post('teacher/update/'+this.teacherForm.id,this.teacherForm).then(({data}) => {
+        this.$admin.post('api/teacher/update/'+this.teacherForm.id,this.teacherForm).then(({data}) => {
           console.log(data);
           this.successNotify('Update');
           this.initialize()
         })
       }
       else{
-        this.$admin.post('teacher/create',this.teacherForm).then(({data}) =>{
+        this.$admin.post('api/teacher/create',this.teacherForm).then(({data}) =>{
           this.successNotify('Created');
           this.initialize()
         })
@@ -195,13 +195,13 @@
     },
 
     generate(teacher){
-      this.$admin.get('teacher/generate/'+ teacher.id).then(({data}) => {
+      this.$admin.get('api/teacher/generate/'+ teacher.id).then(({data}) => {
         this.qr_code =  data
       })
     },
 
     deleteTeacher(teacher){
-      this.$admin.delete('teacher/delete/'+ teacher.id).then(({data}) => {
+      this.$admin.delete('api/teacher/delete/'+ teacher.id).then(({data}) => {
          this.successNotify('Deleted');
         this.initialize() 
       })

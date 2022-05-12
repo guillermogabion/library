@@ -61,7 +61,7 @@
       },
       methods : { 
           initialize(){
-              this.$admin.get('/teacher/show/'+this.$route.params.id).then(({data}) => {
+              this.$admin.get('api/teacher/show/'+this.$route.params.id).then(({data}) => {
                   this.borrows = data
                 //   this.borrow = data
               })

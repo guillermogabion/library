@@ -114,7 +114,7 @@
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
         this.loading = true;
-        this.$admin.get('book/index').then(({data}) => {
+        this.$admin.get('api/book/index').then(({data}) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
             this.books = data;
@@ -150,21 +150,21 @@
       // console.log(this.bookForm)
       //   return
       if(this.bookForm.id){
-        this.$admin.post('book/update/'+this.bookForm.id,this.bookForm).then(({data}) => {
+        this.$admin.post('api/book/update/'+this.bookForm.id,this.bookForm).then(({data}) => {
           this.successNotify('Update');
           this.initialize()
         })
       }
       else{
         console.log(this.bookForm)
-        this.$admin.post('book/create',this.bookForm).then(({data}) =>{
+        this.$admin.post('api/book/create',this.bookForm).then(({data}) =>{
           this.successNotify('Created');
           this.initialize()
         })
       }
     },
     deleteProduct(product){
-      this.$admin.delete('book/delete/'+ product.id).then(({data}) => {
+      this.$admin.delete('api/book/delete/'+ product.id).then(({data}) => {
          this.successNotify('Deleted');
         this.initialize() 
       })

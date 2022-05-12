@@ -70,7 +70,7 @@
       },
       methods : { 
         initialize(){
-            this.$admin.get('borrow/returned').then(({data}) => {
+            this.$admin.get('api/borrow/returned').then(({data}) => {
               this.borrows = data
               this.loading = false;
 

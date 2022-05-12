@@ -108,7 +108,7 @@ export default {
                     alert("Unknown User")
                 }else{
                     localStorage.setItem('token',response.data.token)
-                    localStorage.setItem('user_type','student')
+                    localStorage.setItem('user_type',response.data.user_type)
                     this.$router.push('student/dashboard')
                 }
             })
