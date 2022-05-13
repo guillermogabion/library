@@ -45,7 +45,6 @@ class BorrowController extends Controller
                     ->where('hide', 'NO')->exists();
             $borrowCount = Borrow::where('borrowerable_type', 'App\Models\Teacher')->where('borrowerable_id', $user->id)
                     ->where('hide', 'NO')->get();
-            
 
         }
         elseif($request->user_type == 'Student'){

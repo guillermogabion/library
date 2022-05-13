@@ -109,6 +109,7 @@ export default {
                 }else{
                     localStorage.setItem('token',response.data.token)
                     localStorage.setItem('user_type',response.data.user_type)
+                    console.log(response)
                     this.$router.push('student/dashboard')
                 }
             })

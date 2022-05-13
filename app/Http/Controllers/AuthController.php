@@ -84,9 +84,14 @@ class AuthController extends Controller
 
     public function getBorrowed(Request $request)
     {
-        $user = $request->user();
+        $loginUser = $request->user();
+        $user = $loginUser->borrows->first();
+
+        $books = Borrow::with('book')->where('borrowerable_type', $user->borrowerable_type)->where('borrowerable_id', $user->borrowerable_id)
+                ->where('hide', 'NO')->get();
+        
       
-        return $user;
+        return  $books;
     }
 
     public function studentLogout(Request $request)
