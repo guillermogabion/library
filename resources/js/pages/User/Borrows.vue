@@ -69,8 +69,8 @@
         this.$admin.get(`${localStorage.getItem('user_type')}/getBorrowed`).then(({data}) => {
             //Then injecting the result to datatable parameters.
             this.loading = false;
-            this.books = data;
-            console.log(data);
+            // this.books = data;
+            // console.log(data);
           });
     },
 
