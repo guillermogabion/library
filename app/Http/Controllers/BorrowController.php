@@ -91,6 +91,12 @@ class BorrowController extends Controller
                 $count--;
                 $book->available = $count;
                 $book->save();
+
+                if($count == 0){
+                    $book->update([
+                        'status' => 2
+                    ]);
+                }
         
                 return "Success";
             }
@@ -137,6 +143,11 @@ class BorrowController extends Controller
         $book->available = $count;
         $book->save();
 
+        if($count == 1){
+            $book->update([
+                'status' => 1
+            ]);
+        }
       
 
         $borrow->update($borrowUpdate);
