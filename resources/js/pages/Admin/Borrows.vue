@@ -46,9 +46,9 @@
           </v-row>
           <v-row>
             <v-text-field
-                v-model="form.availlable"
+                v-model="form.available"
                 class="mr-15 ml-15"
-                label="Number of Availlable"
+                label="Number of Available"
                 outlined
                 required
                 disabled
@@ -161,7 +161,7 @@ export default {
               id:null,
               book_title:'',
               author: '',
-              availlable:'',
+              available:'',
               status:'',
 
 
@@ -187,7 +187,7 @@ export default {
          id:null,
               book_title:'',
               author: '',
-              availlable:'',
+              available:'',
               status:'',
 
 
@@ -264,11 +264,12 @@ export default {
     },
     
     change(item){
+      console.log('ten',item)
       this.form.id = item.id
       this.form.book_title = item.book_title
       this.form.author = item.author
-      this.form.availlable = item.availlable
-      this.form.status = item.status == 1? 'Availlable' : 'Unavaillable'
+      this.form.available = item.available
+      this.form.status = item.status == 1? 'Available' : 'Unavailable'
 
     },
     changeUser(user) {
@@ -289,7 +290,7 @@ export default {
           this.errorNotify('User Already Borrowed 3 Books');
         }
         else if(data == 'Error3'){
-          this.errorNotify('Book Is Not Availlable');
+          this.errorNotify('Book Is Not Available');
         }
         else{
           this.successNotify('Borrow');
