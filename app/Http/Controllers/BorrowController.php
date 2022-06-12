@@ -154,4 +154,8 @@ class BorrowController extends Controller
 
         return "Success";
     }
+
+    public function sms(){
+        return Borrow::with('borrowerable')->get();
+    }
 }

@@ -23,8 +23,14 @@ class Borrow extends Model
         return $this->belongsTo(Book::class);
     }
 
+
+
     public function borrowerable()
     {
         return $this->morphTo();
+    }
+
+    public function student(){
+        return $this->belongsTo(Student::class);
     }
 }

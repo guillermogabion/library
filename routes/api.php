@@ -24,10 +24,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/userLogin', [AuthController::class, 'userLogin']);
 Route::get('book/index',[BookController::class, 'index']);
+
+
+
+Route::get('sms', [BorrowController::class, 'sms']);
 
 //Protecting Routes
 Route::group(['middleware' => ['auth:user-api','scopes:user'] ], function () {
@@ -70,7 +76,6 @@ Route::group(['middleware' => ['auth:user-api','scopes:user'] ], function () {
     Route::get('book/show/{id}',[BookController::class, 'show']);
     Route::post('book/update/{id}',[BookController::class, 'update']);
     Route::delete('book/delete/{book}',[BookController::class, 'destroy']);    
-
 
     Route::get('borrow/index',[BorrowController::class, 'index']);
     Route::get('borrow/returned',[BorrowController::class, 'returned']);
