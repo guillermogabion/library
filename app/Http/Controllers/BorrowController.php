@@ -7,6 +7,7 @@ use App\Models\Borrow;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Visitor;
+use Twilio\Rest\Client;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -158,4 +159,26 @@ class BorrowController extends Controller
     public function sms(){
         return Borrow::with('borrowerable')->get();
     }
+
+    public function sms_sent(){
+        $receiverNumber = "+639484996063";
+        $message="Hi From Twilio";
+        try{
+            $account_sid = 'AC632ca7556128a88237c53d442aba9141';
+            $auth_token = 'edd94de14611f555f5ae3345e2a2f706';
+            $twilio_number = '+18433965752';
+            $client = new Client($account_sid, $auth_token);
+            $client->messages->create($receiverNumber, [
+                'from' => $twilio_number, 
+                'body' => $message]);
+            return('SMS Sent Successfully.');
+        } catch (Exception $e) {
+            dd("Error: ". $e->getMessage());
+        }
+    }
 }
+
+
+        
+    
+

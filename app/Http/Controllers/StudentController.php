@@ -34,7 +34,7 @@ class StudentController extends Controller
             'course'=>$request->course,
             'year'=>$request->year,
             'email'=> $request->email,
-            'phone_number'=>$request->phone_number,
+            'phone_number'=>'+63' . $request->phone_number,
 
 
         ]);

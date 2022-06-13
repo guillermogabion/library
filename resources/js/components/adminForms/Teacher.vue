@@ -31,6 +31,7 @@
                             ></v-text-field><v-text-field
                                 label="*Phone Number"
                                 required
+                                placeholder="Ex. 9261231234"
                                 v-model="form.phone_number"
                             ></v-text-field>
                             <v-text-field

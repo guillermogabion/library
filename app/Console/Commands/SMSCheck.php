@@ -41,17 +41,8 @@ class CheckItem extends Command
      */
     public function handle()
     {
-        
-        // echo "test";
-
-    //    return Borrow::where( 'created_at', '>=', Carbon::today()->subDays(5))
-    //             // ->update(['is_expired'=> 1]);
-    //             ->delete();
-
-    $borrow = Borrow::with('borrowerable')->where('created_at', '>=', Carbon::today()->subDays(5))->first();
-    // $reciever = '+63' . $borrow->borrowerable.phone_number;
-
-
-                
-    }
+   return Borrow::where('created_at', '>=', Carbon::today()->subDays(3))->update([
+        'status' => 'Over Due'
+    ]);
+}
 }

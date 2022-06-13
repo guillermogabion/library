@@ -78,6 +78,7 @@
           },
           { text: "Book Name", value: "book_title", align: 'center'},
           { text: "Author", value: "author", align: 'center' },
+          { text: "Book Type", value: "book_type", align: 'center' },
           { text: "Available Books", value: "available" , align: 'center'},
           { text: "Total Books", value: "total", align: 'center' },
           { text: "Status", value: "status", align: 'center' },
