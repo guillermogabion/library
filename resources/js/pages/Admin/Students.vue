@@ -74,10 +74,20 @@
                     mdi-close-circle-outline
                 </v-icon>
           </v-card-title>
-          <v-card-text class="mt-4">Please Take a Pic or Screenshot this.</v-card-text>
           <v-card-actions>
                 <div class="mt-5 mb-5 mx-auto " v-html="qr_code"></div>
           </v-card-actions>
+          <v-spacer></v-spacer>
+            <div align="center">
+              <span style="font-weight: bold; font-color: black;">{{ editedItem.last_name }}, {{ editedItem.first_name }}</span>
+              <br>
+              <span style="font-size: 10px; font-color: black;">Name</span>
+              <br>
+              <span style="font-weight: bold; font-color: black;">{{ editedItem.phone_number }}</span>
+              <br>
+              <span style="font-size: 10px; font-color: black;">Contact Number</span>
+            </div>
+          <v-spacer></v-spacer>
       </v-card>
       </v-dialog>
     </v-row>
@@ -124,7 +134,15 @@
           course:'',
           year: null,
           // image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
-        }
+        },
+
+         editedIndex: -1,
+          editedItem: {
+          first_name: '',
+          last_name: 0,
+          phone_number: 0,
+          courseYear: 0,
+          },
       };
   },
   //this one will populate new data set when user changes current page. 
@@ -208,6 +226,8 @@
     },
 
     generate(student){
+      this.editedIndex = this.students.indexOf(student)
+      this.editedItem = Object.assign({}, student)
       this.$admin.get('api/student/generate/'+ student.id).then(({data}) => {
         this.qr_code =  data
       })
