@@ -58,7 +58,7 @@
             {text: 'Book Name', align: 'center', value: 'book.book_title'},
             {text: 'Author', align: 'center', value: 'book.author'},
             {text: 'Borrowed On', align: 'center', value: 'date'},
-            {text: 'Status', align: 'center', value: 'status'},
+            // {text: 'Status', align: 'center', value: 'status'},
             {text: 'Action', align: 'center', value: 'action'},
             ],
             editedIndex: -1,
